@@ -11,7 +11,7 @@ This module provides support for Clam in Sling.
 
 ## Finding data to scan for malware
 
-`JcrPropertyDigger` observes Oak's NodeStore, digs properties based on type, path and length and creates scan jobs.
+`NodeObservingJcrPropertyDigger` observes Oak's NodeStore, digs properties based on type, path and length and creates scan jobs.
 
 **NOTE**: Ensure to exclude scan jobs in `/var/eventing` and scan results in `/var/clam/results` from scanning.
 

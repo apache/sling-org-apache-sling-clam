@@ -24,10 +24,10 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.osgi.service.metatype.annotations.Option;
 
 @ObjectClassDefinition(
-    name = "Apache Sling Clam JCR Property Digger",
+    name = "Apache Sling Clam Node Observing JCR Property Digger",
     description = "Observes the node store and adds scan jobs for matching JCR properties"
 )
-@interface JcrPropertyDiggerConfiguration {
+@interface NodeObservingJcrPropertyDiggerConfiguration {
 
     @AttributeDefinition(
         name = "property type",

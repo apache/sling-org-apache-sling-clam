@@ -58,15 +58,15 @@ import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
 @Component(
     immediate = true,
     property = {
-        Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam JCR Property Digger",
+        Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam Node Observing JCR Property Digger",
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation"
     }
 )
 @Designate(
-    ocd = JcrPropertyDiggerConfiguration.class,
+    ocd = NodeObservingJcrPropertyDiggerConfiguration.class,
     factory = true
 )
-public class JcrPropertyDigger extends NodeObserver {
+public class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Reference
     private volatile NodeStore nodeStore;
@@ -100,16 +100,16 @@ public class JcrPropertyDigger extends NodeObserver {
 
     private Closeable closeable;
 
-    private JcrPropertyDiggerConfiguration configuration;
+    private NodeObservingJcrPropertyDiggerConfiguration configuration;
 
-    private final Logger logger = LoggerFactory.getLogger(JcrPropertyDigger.class);
+    private final Logger logger = LoggerFactory.getLogger(NodeObservingJcrPropertyDigger.class);
 
-    public JcrPropertyDigger() {
+    public NodeObservingJcrPropertyDigger() {
         super("/");
     }
 
     @Activate
-    private void activate(final JcrPropertyDiggerConfiguration configuration) {
+    private void activate(final NodeObservingJcrPropertyDiggerConfiguration configuration) {
         logger.debug("activating");
         this.configuration = configuration;
         configure(configuration);
@@ -119,7 +119,7 @@ public class JcrPropertyDigger extends NodeObserver {
     }
 
     @Modified
-    private void modified(final JcrPropertyDiggerConfiguration configuration) {
+    private void modified(final NodeObservingJcrPropertyDiggerConfiguration configuration) {
         logger.debug("modifying");
         this.configuration = configuration;
         configure(configuration);
@@ -137,7 +137,7 @@ public class JcrPropertyDigger extends NodeObserver {
         configuration = null;
     }
 
-    private void configure(final JcrPropertyDiggerConfiguration configuration) {
+    private void configure(final NodeObservingJcrPropertyDiggerConfiguration configuration) {
         pattern = Pattern.compile(configuration.property_path_pattern());
         propertyType = PropertyType.valueFromName(configuration.property_type());
     }
