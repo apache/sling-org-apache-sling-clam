@@ -34,7 +34,6 @@ import org.apache.jackrabbit.oak.spi.commit.Observable;
 import org.apache.jackrabbit.oak.spi.state.NodeStore;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
-import org.apache.sling.clam.internal.ClamUtil;
 import org.apache.sling.commons.threads.ThreadPool;
 import org.apache.sling.commons.threads.ThreadPoolManager;
 import org.apache.sling.event.jobs.JobManager;
@@ -52,6 +51,7 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.apache.sling.clam.internal.ClamUtil.checkLength;
 import static org.apache.sling.clam.internal.ClamUtil.properties;
 import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
 
@@ -175,13 +175,6 @@ public class NodeObservingJcrPropertyDigger extends NodeObserver {
             }
         }
         return paths;
-    }
-
-    private boolean checkLength(final long length, final long maxLength) {
-        if (maxLength == -1) {
-            return true;
-        }
-        return length <= maxLength;
     }
 
     private Set<String> concat(final Set<String> a, Set<String> b) {

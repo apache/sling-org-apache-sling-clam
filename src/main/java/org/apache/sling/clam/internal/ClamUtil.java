@@ -75,4 +75,11 @@ public final class ClamUtil {
         return properties;
     }
 
+    public static boolean checkLength(final long length, final long maxLength) {
+        if (maxLength == -1) {
+            return true;
+        }
+        return length <= maxLength;
+    }
+
 }
