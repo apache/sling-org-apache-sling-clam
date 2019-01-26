@@ -130,7 +130,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
     }
 
     private boolean checkPersist(final ScanResult scanResult) {
-        return !scanResult.isOk() || scanResult.isOk() && configuration.result_status_ok_persist();
+        return !scanResult.isOk() || configuration.result_status_ok_persist();
     }
 
     private void persistResult(@NotNull ScanResult scanResult, @NotNull String path, Integer index, int propertyType, @Nullable String userId) {

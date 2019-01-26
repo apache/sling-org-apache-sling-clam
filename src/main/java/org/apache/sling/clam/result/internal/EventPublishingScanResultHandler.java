@@ -101,7 +101,7 @@ public class EventPublishingScanResultHandler implements JcrPropertyScanResultHa
     }
 
     private boolean checkPublish(final ScanResult scanResult) {
-        return !scanResult.isOk() || scanResult.isOk() && configuration.result_status_ok_publish();
+        return !scanResult.isOk() || configuration.result_status_ok_publish();
     }
 
 }
