@@ -228,7 +228,7 @@ public class NodeObservingJcrPropertyDigger extends NodeObserver {
                             }
                         } else { // single property value
                             if (checkLength(property.getLength(), maxLength)) {
-                                jobManager.addJob(scanJobTopic(propertyType), ClamUtil.properties(path, userId));
+                                jobManager.addJob(scanJobTopic(propertyType), properties(path, userId));
                             } else {
                                 logger.warn("Length of property '{}' greater than configured max length ({}).", path, maxLength);
                             }
