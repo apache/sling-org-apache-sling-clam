@@ -19,7 +19,6 @@
 package org.apache.sling.clam.it.tests;
 
 import org.apache.sling.testing.paxexam.TestSupport;
-import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 
 import static org.apache.sling.testing.paxexam.SlingOptions.slingEvent;
