@@ -82,7 +82,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
 
     private ResourcePersistingScanResultHandlerConfiguration configuration;
 
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss/SSS");
+    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
 
     private static final String NT_SLING_ORDERED_FOLDER = "sling:OrderedFolder";
 
