@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.jcr.PropertyType;
 
@@ -140,7 +141,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
             properties.put(JCR_MIXINTYPES, MIX_CREATED);
             properties.put(SLING_RESOURCE_TYPE_PROPERTY, RESULT_RESOURCE_TYPE);
             final Resource parent = getOrCreateParent(resourceResolver);
-            final String name = ResourceUtil.createUniqueChildName(parent, PropertyType.nameFromValue(propertyType));
+            final String name = String.format("%s-%s", PropertyType.nameFromValue(propertyType), UUID.randomUUID());
             final Resource result = resourceResolver.create(parent, name, properties);
             resourceResolver.commit();
             if (index == null) {
