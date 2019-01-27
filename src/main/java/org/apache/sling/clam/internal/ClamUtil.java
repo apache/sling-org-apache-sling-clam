@@ -72,6 +72,7 @@ public final class ClamUtil {
         properties.put("timestamp", scanResult.getTimestamp());
         properties.put("message", scanResult.getMessage());
         properties.put("status", scanResult.getStatus().name());
+        properties.put("started", scanResult.getStarted());
         return properties;
     }
 
