@@ -42,7 +42,7 @@ public abstract class ClamTestSupport extends TestSupport {
                 .put("scripts", new String[]{"create service user sling-clam\ncreate path (sling:Folder) /var/clam/results\nset ACL for sling-clam\nallow jcr:all on /var/clam\nend"})
                 .asOption(),
             factoryConfiguration("org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended")
-                .put("user.mapping", new String[]{"org.apache.sling.clam=sling-readall", "org.apache.sling.clam:result-writer=sling-clam"})
+                .put("user.mapping", new String[]{"org.apache.sling.clam=sling-clam", "org.apache.sling.clam:result-writer=sling-clam"})
                 .asOption(),
             // Sling Commons Clam
             mavenBundle().groupId(SLING_GROUP_ID).artifactId("org.apache.sling.commons.clam").versionAsInProject(),
