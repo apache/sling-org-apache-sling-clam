@@ -139,7 +139,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
             properties.put(JCR_PRIMARYTYPE, NT_UNSTRUCTURED);
             properties.put(JCR_MIXINTYPES, MIX_CREATED);
             properties.put(SLING_RESOURCE_TYPE_PROPERTY, RESULT_RESOURCE_TYPE);
-            final Resource parent = getOrCreateParent(resourceResolver, scanResult.getTimestamp());
+            final Resource parent = getOrCreateParent(resourceResolver);
             final String name = ResourceUtil.createUniqueChildName(parent, PropertyType.nameFromValue(propertyType));
             final Resource result = resourceResolver.create(parent, name, properties);
             resourceResolver.commit();
@@ -153,9 +153,8 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
         }
     }
 
-    private Resource getOrCreateParent(final ResourceResolver resourceResolver, final long timestamp) throws PersistenceException {
-        final Date date = new Date(timestamp);
-        final String path = String.format("%s/%s", configuration.result_root_path(), FORMAT.format(date));
+    private Resource getOrCreateParent(final ResourceResolver resourceResolver) throws PersistenceException {
+        final String path = String.format("%s/%s", configuration.result_root_path(), FORMAT.format(new Date()));
         return ResourceUtil.getOrCreateResource(resourceResolver, path, NT_SLING_ORDERED_FOLDER, NT_SLING_ORDERED_FOLDER, true);
     }
 
