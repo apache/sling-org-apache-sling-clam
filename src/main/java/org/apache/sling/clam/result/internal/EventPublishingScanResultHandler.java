@@ -18,7 +18,6 @@
  */
 package org.apache.sling.clam.result.internal;
 
-import org.apache.sling.clam.internal.ClamUtil;
 import org.apache.sling.clam.result.JcrPropertyScanResultHandler;
 import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
@@ -87,7 +86,7 @@ public class EventPublishingScanResultHandler implements JcrPropertyScanResultHa
     @Override
     public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int propertyType, @Nullable String userId) {
         if (checkPublish(scanResult)) {
-            final Event event = new Event(resultEventTopic(propertyType), ClamUtil.properties(path, userId, scanResult));
+            final Event event = new Event(resultEventTopic(propertyType), properties(path, userId, scanResult));
             eventAdmin.postEvent(event);
         }
     }
