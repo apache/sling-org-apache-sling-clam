@@ -19,7 +19,9 @@
 package org.apache.sling.clam.internal;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.jcr.PropertyType;
 
@@ -81,6 +83,15 @@ public final class ClamUtil {
             return true;
         }
         return length <= maxLength;
+    }
+
+    public static Set<Integer> propertyTypesFromNames(@NotNull final String[] names) throws Exception {
+        final Set<Integer> propertyTypes = new HashSet<>();
+        for (final String name : names) {
+            final int propertyType = PropertyType.valueFromName(name);
+            propertyTypes.add(propertyType);
+        }
+        return propertyTypes;
     }
 
 }
