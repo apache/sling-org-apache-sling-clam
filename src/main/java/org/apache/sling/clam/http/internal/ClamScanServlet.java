@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 import javax.jcr.Node;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -120,7 +121,7 @@ public class ClamScanServlet extends SlingAllMethodsServlet {
             logger.error(e.getMessage(), e);
         }
         if (!isAuthorized) {
-            handleError(response, 403, null);
+            handleError(response, HttpServletResponse.SC_FORBIDDEN, null);
             return;
         }
 
@@ -136,26 +137,26 @@ public class ClamScanServlet extends SlingAllMethodsServlet {
             maxLength = maxLength(request, configuration.digger_default_property_length_max());
             maxDepth = RequestUtil.maxDepth(request, configuration.digger_default_node_depth_max());
         } catch (Exception e) {
-            response.sendError(400, e.getMessage());
+            handleError(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
             return;
         }
 
         final Resource resource = request.getResourceResolver().getResource(path);
         if (resource == null) {
-            response.sendError(400, "No resource at given path found: " + path);
+            handleError(response, HttpServletResponse.SC_BAD_REQUEST, "No resource at given path found: " + path);
             return;
         }
 
         final Node node = resource.adaptTo(Node.class);
         if (node == null) {
-            response.sendError(400, "Resource at given path is not a Node: " + path);
+            handleError(response, HttpServletResponse.SC_BAD_REQUEST, "Resource at given path is not a Node: " + path);
             return;
         }
 
         try {
             digger.dig(node, pattern, propertyTypes, maxLength, maxDepth);
         } catch (Exception e) {
-            response.sendError(500, e.getMessage());
+            handleError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 

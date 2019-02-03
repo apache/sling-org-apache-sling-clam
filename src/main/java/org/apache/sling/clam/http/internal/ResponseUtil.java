@@ -19,6 +19,7 @@
 package org.apache.sling.clam.http.internal;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.json.Json;
 import javax.json.JsonException;
@@ -36,7 +37,7 @@ public class ResponseUtil {
 
     static void handleError(@NotNull final SlingHttpServletResponse response, final int status, @Nullable final String message) throws ServletException, IOException {
         try {
-            response.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.setContentType("application/json");
             response.setStatus(status);
             if (message != null) {
