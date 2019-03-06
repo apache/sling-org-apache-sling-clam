@@ -18,7 +18,6 @@
  */
 package org.apache.sling.clam.oak.internal;
 
-import java.io.Closeable;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +29,7 @@ import javax.jcr.Session;
 
 import org.apache.jackrabbit.oak.plugins.observation.NodeObserver;
 import org.apache.jackrabbit.oak.spi.commit.CommitInfo;
-import org.apache.jackrabbit.oak.spi.commit.Observable;
-import org.apache.jackrabbit.oak.spi.state.NodeStore;
+import org.apache.jackrabbit.oak.spi.commit.Observer;
 import org.apache.sling.api.resource.ResourceResolver;
 import org.apache.sling.api.resource.ResourceResolverFactory;
 import org.apache.sling.commons.threads.ThreadPool;
@@ -56,6 +54,7 @@ import static org.apache.sling.clam.internal.ClamUtil.properties;
 import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
 
 @Component(
+    service = Observer.class,
     immediate = true,
     property = {
         Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam Node Observing JCR Property Digger",
@@ -67,9 +66,6 @@ import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
     factory = true
 )
 public class NodeObservingJcrPropertyDigger extends NodeObserver {
-
-    @Reference
-    private volatile NodeStore nodeStore;
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,
@@ -98,8 +94,6 @@ public class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     private ThreadPool threadPool;
 
-    private Closeable closeable;
-
     private NodeObservingJcrPropertyDiggerConfiguration configuration;
 
     private final Logger logger = LoggerFactory.getLogger(NodeObservingJcrPropertyDigger.class);
@@ -114,8 +108,6 @@ public class NodeObservingJcrPropertyDigger extends NodeObserver {
         this.configuration = configuration;
         configure(configuration);
         threadPool = threadPoolManager.get(configuration.threadpool_name());
-        final Observable observable = (Observable) nodeStore;
-        closeable = observable.addObserver(this);
     }
 
     @Modified
@@ -128,11 +120,6 @@ public class NodeObservingJcrPropertyDigger extends NodeObserver {
     @Deactivate
     private void deactivate() {
         logger.debug("deactivating");
-        try {
-            closeable.close();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
         threadPoolManager.release(threadPool);
         configuration = null;
     }
