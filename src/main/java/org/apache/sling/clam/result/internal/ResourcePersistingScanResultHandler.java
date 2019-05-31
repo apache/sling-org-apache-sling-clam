@@ -89,7 +89,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
 
     private static final String SLING_RESOURCE_TYPE_PROPERTY = "sling:resourceType";
 
-    private static final String RESULT_RESOURCE_TYPE = "sling/clam/result";
+    private static final String JCR_RESULT_RESOURCE_TYPE = "sling/clam/jcr/result";
 
     private static final String SUBSERVICE = "result-writer";
 
@@ -139,7 +139,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
             final Map<String, Object> properties = properties(path, index, userId, scanResult);
             properties.put(JCR_PRIMARYTYPE, NT_UNSTRUCTURED);
             properties.put(JCR_MIXINTYPES, MIX_CREATED);
-            properties.put(SLING_RESOURCE_TYPE_PROPERTY, RESULT_RESOURCE_TYPE);
+            properties.put(SLING_RESOURCE_TYPE_PROPERTY, JCR_RESULT_RESOURCE_TYPE);
             final Resource parent = getOrCreateParent(resourceResolver);
             final String name = String.format("%s-%s", PropertyType.nameFromValue(propertyType), UUID.randomUUID());
             final Resource result = resourceResolver.create(parent, name, properties);
