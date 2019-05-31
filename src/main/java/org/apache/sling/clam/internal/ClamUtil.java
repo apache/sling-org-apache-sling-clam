@@ -75,6 +75,7 @@ public final class ClamUtil {
         properties.put("message", scanResult.getMessage());
         properties.put("status", scanResult.getStatus().name());
         properties.put("started", scanResult.getStarted());
+        properties.put("size", scanResult.getSize());
         return properties;
     }
 
