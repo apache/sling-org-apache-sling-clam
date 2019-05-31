@@ -117,7 +117,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int propertyType, @NotNull String userId) {
+    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int propertyType, @Nullable String userId) {
         if (checkPersist(scanResult)) {
             persistResult(scanResult, path, null, propertyType, userId);
         }
