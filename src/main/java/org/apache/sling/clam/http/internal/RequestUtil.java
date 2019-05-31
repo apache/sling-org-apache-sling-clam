@@ -37,61 +37,61 @@ public class RequestUtil {
     }
 
     static String path(@NotNull final SlingHttpServletRequest request) throws Exception {
-        final String path = request.getParameter("path");
-        if (path == null) {
+        final String value = request.getParameter("path");
+        if (value == null) {
             throw new Exception("Mandatory parameter path is missing");
         } else {
-            return path;
+            return value;
         }
     }
 
-    static Pattern pattern(@NotNull final SlingHttpServletRequest request, @NotNull final Pattern pattern) throws Exception {
-        final String parameter = request.getParameter("pattern");
-        if (parameter == null) {
-            return pattern;
+    static Pattern pattern(@NotNull final SlingHttpServletRequest request, @NotNull final Pattern defaultPattern) throws Exception {
+        final String value = request.getParameter("pattern");
+        if (value == null) {
+            return defaultPattern;
         } else {
             try {
-                return Pattern.compile(parameter);
+                return Pattern.compile(value);
             } catch (Exception e) {
-                throw new Exception("Invalid parameter value for pattern: " + parameter);
+                throw new Exception("Invalid parameter value for pattern: " + value);
             }
         }
     }
 
-    static Set<Integer> propertyTypes(@NotNull final SlingHttpServletRequest request, @NotNull final Set<Integer> propertyTypes) throws Exception {
-        final String[] parameter = request.getParameterValues("propertyType");
-        if (parameter == null || parameter.length == 0) {
-            return propertyTypes;
+    static Set<Integer> propertyTypes(@NotNull final SlingHttpServletRequest request, @NotNull final Set<Integer> defaultPropertyTypes) throws Exception {
+        final String[] values = request.getParameterValues("propertyTypes");
+        if (values == null || values.length == 0) {
+            return defaultPropertyTypes;
         }
         try {
-            return propertyTypesFromNames(parameter);
+            return propertyTypesFromNames(values);
         } catch (Exception e) {
-            throw new Exception("Invalid parameter value for propertyType: " + Arrays.toString(parameter));
+            throw new Exception("Invalid parameter value for propertyTypes: " + Arrays.toString(values));
         }
     }
 
-    static long maxLength(@NotNull final SlingHttpServletRequest request, final long maxLength) throws Exception {
-        final String parameter = request.getParameter("maxLength");
-        if (parameter == null) {
-            return maxLength;
+    static long maxLength(@NotNull final SlingHttpServletRequest request, final long defaultMaxLength) throws Exception {
+        final String value = request.getParameter("maxLength");
+        if (value == null) {
+            return defaultMaxLength;
         } else {
             try {
-                return Long.parseLong(parameter);
+                return Long.parseLong(value);
             } catch (Exception e) {
-                throw new Exception("Invalid parameter value for maxLength: " + parameter);
+                throw new Exception("Invalid parameter value for maxLength: " + value);
             }
         }
     }
 
-    static int maxDepth(@NotNull final SlingHttpServletRequest request, final int maxDepth) throws Exception {
-        final String parameter = request.getParameter("maxDepth");
-        if (parameter == null) {
-            return maxDepth;
+    static int maxDepth(@NotNull final SlingHttpServletRequest request, final int defaultMaxDepth) throws Exception {
+        final String value = request.getParameter("maxDepth");
+        if (value == null) {
+            return defaultMaxDepth;
         } else {
             try {
-                return Integer.parseInt(parameter);
+                return Integer.parseInt(value);
             } catch (Exception e) {
-                throw new Exception("Invalid parameter value for maxDepth: " + parameter);
+                throw new Exception("Invalid parameter value for maxDepth: " + value);
             }
         }
     }
