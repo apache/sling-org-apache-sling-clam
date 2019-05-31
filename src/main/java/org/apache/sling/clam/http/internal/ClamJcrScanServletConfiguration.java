@@ -23,10 +23,10 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import org.osgi.service.metatype.annotations.Option;
 
 @ObjectClassDefinition(
-    name = "Apache Sling Clam Scan Servlet",
+    name = "Apache Sling Clam JCR Scan Servlet",
     description = "..."
 )
-@interface ClamScanServletConfiguration {
+@interface ClamJcrScanServletConfiguration {
 
     @AttributeDefinition(
         name = "scan authorized groups",

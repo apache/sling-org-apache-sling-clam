@@ -32,7 +32,9 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
+import org.apache.sling.auth.core.AuthConstants;
 import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
+import org.apache.sling.servlets.resolver.internal.ServletResolverConstants;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
@@ -57,16 +59,16 @@ import static org.apache.sling.clam.internal.ClamUtil.propertyTypesFromNames;
 @Component(
     service = Servlet.class,
     property = {
-        Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam Scan Servlet",
+        Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam JCR Scan Servlet",
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
-        "sling.servlet.paths=/bin/clam/scan",
-        "sling.auth.requirements=/bin/clam/scan"
+        ServletResolverConstants.SLING_SERVLET_PATHS + "=/system/clam-jcr-scan",
+        AuthConstants.AUTH_REQUIREMENTS + "=/system/clam-jcr-scan"
     }
 )
 @Designate(
-    ocd = ClamScanServletConfiguration.class
+    ocd = ClamJcrScanServletConfiguration.class
 )
-public class ClamScanServlet extends SlingAllMethodsServlet {
+public class ClamJcrScanServlet extends SlingAllMethodsServlet {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,
@@ -74,26 +76,26 @@ public class ClamScanServlet extends SlingAllMethodsServlet {
     )
     private volatile NodeDescendingJcrPropertyDigger digger;
 
-    private ClamScanServletConfiguration configuration;
+    private ClamJcrScanServletConfiguration configuration;
 
     private Pattern pattern;
 
     private Set<Integer> propertyTypes;
 
-    private final Logger logger = LoggerFactory.getLogger(ClamScanServlet.class);
+    private final Logger logger = LoggerFactory.getLogger(ClamJcrScanServlet.class);
 
-    public ClamScanServlet() {
+    public ClamJcrScanServlet() {
     }
 
     @Activate
-    private void activate(final ClamScanServletConfiguration configuration) throws Exception {
+    private void activate(final ClamJcrScanServletConfiguration configuration) throws Exception {
         logger.debug("activating");
         this.configuration = configuration;
         configure(configuration);
     }
 
     @Modified
-    private void modified(final ClamScanServletConfiguration configuration) throws Exception {
+    private void modified(final ClamJcrScanServletConfiguration configuration) throws Exception {
         logger.debug("modifying");
         this.configuration = configuration;
         configure(configuration);
@@ -107,7 +109,7 @@ public class ClamScanServlet extends SlingAllMethodsServlet {
         propertyTypes = null;
     }
 
-    private void configure(final ClamScanServletConfiguration configuration) throws Exception {
+    private void configure(final ClamJcrScanServletConfiguration configuration) throws Exception {
         pattern = Pattern.compile(configuration.digger_default_property_path_pattern());
         propertyTypes = propertyTypesFromNames(configuration.digger_default_property_types());
     }
@@ -154,6 +156,7 @@ public class ClamScanServlet extends SlingAllMethodsServlet {
         }
 
         try {
+            logger.debug("digging in {} (not deeper than {} levels) for properties of types {} matching {} limited by {} bytes", node.getPath(), maxDepth, propertyTypes, pattern, maxLength);
             digger.dig(node, pattern, propertyTypes, maxLength, maxDepth);
         } catch (Exception e) {
             handleError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
