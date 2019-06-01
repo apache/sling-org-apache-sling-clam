@@ -21,12 +21,14 @@ package org.apache.sling.clam.http.internal;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import javax.jcr.PropertyType;
 import javax.json.Json;
 import javax.json.JsonException;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 
 import org.apache.sling.api.SlingHttpServletResponse;
+import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,6 +50,24 @@ public class ResponseUtil {
         } catch (final JsonException e) {
             throw new ServletException("Building response failed.");
         }
+    }
+
+    static String json(@NotNull ScanResult scanResult, @NotNull String path, @Nullable Integer index, int propertyType, @Nullable String userId) {
+        final JsonObjectBuilder event = Json.createObjectBuilder();
+        event.add("timestamp", scanResult.getTimestamp());
+        event.add("status", scanResult.getStatus().name());
+        event.add("message", scanResult.getMessage());
+        event.add("started", scanResult.getStarted());
+        event.add("size", scanResult.getSize());
+        event.add("path", path);
+        if (index != null) {
+            event.add("index", index);
+        }
+        event.add("propertyType", PropertyType.nameFromValue(propertyType));
+        if (userId != null) {
+            event.add("userId", userId);
+        }
+        return event.build().toString();
     }
 
 }
