@@ -49,6 +49,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.apache.sling.clam.http.internal.RequestUtil.isAuthorized;
+import static org.apache.sling.clam.http.internal.RequestUtil.maxDepth;
 import static org.apache.sling.clam.http.internal.RequestUtil.maxLength;
 import static org.apache.sling.clam.http.internal.RequestUtil.path;
 import static org.apache.sling.clam.http.internal.RequestUtil.pattern;
@@ -137,7 +138,7 @@ public class ClamJcrScanServlet extends SlingAllMethodsServlet {
             pattern = pattern(request, this.pattern);
             propertyTypes = propertyTypes(request, this.propertyTypes);
             maxLength = maxLength(request, configuration.digger_default_property_length_max());
-            maxDepth = RequestUtil.maxDepth(request, configuration.digger_default_node_depth_max());
+            maxDepth = maxDepth(request, configuration.digger_default_node_depth_max());
         } catch (Exception e) {
             handleError(response, HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
             return;
