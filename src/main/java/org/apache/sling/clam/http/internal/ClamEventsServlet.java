@@ -81,7 +81,7 @@ public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanRes
         response.setContentType("text/event-stream");
         response.addHeader("Connection", "close");
         final AsyncContext context = request.startAsync();
-        context.setTimeout(30000);
+        context.setTimeout(0);
         final Client client = new Client(context);
         context.getResponse().getOutputStream().setWriteListener(client);
         clients.add(client);
