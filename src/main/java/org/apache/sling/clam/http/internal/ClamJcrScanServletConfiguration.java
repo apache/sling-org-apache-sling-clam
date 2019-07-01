@@ -32,7 +32,7 @@ import org.osgi.service.metatype.annotations.Option;
         name = "scan authorized groups",
         description = "User groups authorized for scanning"
     )
-    String[] scan_authorized_groups() default {"clam-scan"};
+    String[] scan_authorized_groups() default {};
 
     @AttributeDefinition(
         name = "default property types",

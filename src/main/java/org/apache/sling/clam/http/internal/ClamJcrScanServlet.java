@@ -20,6 +20,7 @@ package org.apache.sling.clam.http.internal;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -117,15 +118,18 @@ public class ClamJcrScanServlet extends SlingAllMethodsServlet {
 
     @Override
     protected void doPost(@NotNull final SlingHttpServletRequest request, @NotNull final SlingHttpServletResponse response) throws ServletException, IOException {
-        boolean isAuthorized = false;
-        try {
-            isAuthorized = isAuthorized(request, Arrays.asList(configuration.scan_authorized_groups()));
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        }
-        if (!isAuthorized) {
-            handleError(response, HttpServletResponse.SC_FORBIDDEN, null);
-            return;
+        final List<String> groups = Arrays.asList(configuration.scan_authorized_groups());
+        if (!groups.isEmpty()) {
+            boolean isAuthorized = false;
+            try {
+                isAuthorized = isAuthorized(request, groups);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            }
+            if (!isAuthorized) {
+                handleError(response, HttpServletResponse.SC_FORBIDDEN, null);
+                return;
+            }
         }
 
         final String path;
