@@ -31,6 +31,7 @@ import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.util.Filter;
 
 import static org.junit.Assert.assertNotNull;
+import static org.ops4j.pax.exam.CoreOptions.options;
 
 @RunWith(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
@@ -42,7 +43,9 @@ public class JcrPropertyScanJobConsumerIT extends ClamTestSupport {
 
     @Configuration
     public Option[] configuration() {
-        return super.configuration();
+        return options(
+            baseConfiguration()
+        );
     }
 
     @Test
