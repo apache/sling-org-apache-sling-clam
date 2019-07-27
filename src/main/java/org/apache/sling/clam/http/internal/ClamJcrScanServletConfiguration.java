@@ -24,9 +24,21 @@ import org.osgi.service.metatype.annotations.Option;
 
 @ObjectClassDefinition(
     name = "Apache Sling Clam JCR Scan Servlet",
-    description = "..."
+    description = "TODO"
 )
 @interface ClamJcrScanServletConfiguration {
+
+    @AttributeDefinition(
+        name = "TODO",
+        description = "TODO"
+    )
+    String[] sling_servlet_paths() default {"/system/clam-jcr-scan"};
+
+    @AttributeDefinition(
+        name = "TODO",
+        description = "TODO"
+    )
+    String[] sling_auth_requirements() default {"/system/clam-jcr-scan"};
 
     @AttributeDefinition(
         name = "scan authorized groups",

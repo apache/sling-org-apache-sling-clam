@@ -33,9 +33,7 @@ import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
-import org.apache.sling.auth.core.AuthConstants;
 import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
-import org.apache.sling.servlets.resolver.internal.ServletResolverConstants;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
@@ -62,9 +60,7 @@ import static org.apache.sling.clam.internal.ClamUtil.propertyTypesFromNames;
     service = Servlet.class,
     property = {
         Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam JCR Scan Servlet",
-        Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
-        ServletResolverConstants.SLING_SERVLET_PATHS + "=/system/clam-jcr-scan",
-        AuthConstants.AUTH_REQUIREMENTS + "=/system/clam-jcr-scan"
+        Constants.SERVICE_VENDOR + "=The Apache Software Foundation"
     }
 )
 @Designate(

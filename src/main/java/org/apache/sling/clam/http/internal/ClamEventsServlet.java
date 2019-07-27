@@ -38,7 +38,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.sling.auth.core.AuthConstants;
 import org.apache.sling.clam.result.JcrPropertyScanResultHandler;
 import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +45,7 @@ import org.jetbrains.annotations.Nullable;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,10 +60,11 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
         Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam Events Servlet",
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
         HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=org.osgi.service.http)",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN + "=/system/clam-events",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED + "=true",
-        AuthConstants.AUTH_REQUIREMENTS + "=/system/clam-events"
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED + "=true"
     }
+)
+@Designate(
+    ocd = ClamEventsServletConfiguration.class
 )
 public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
 
