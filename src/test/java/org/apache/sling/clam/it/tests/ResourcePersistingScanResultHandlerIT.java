@@ -19,8 +19,14 @@
 package org.apache.sling.clam.it.tests;
 
 import javax.inject.Inject;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+import javax.jcr.query.Query;
+import javax.jcr.query.QueryResult;
 
+import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
 import org.apache.sling.clam.result.JcrPropertyScanResultHandler;
+import org.apache.sling.resource.presence.ResourcePresence;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.Configuration;
@@ -30,8 +36,14 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.util.Filter;
 
-import static org.junit.Assert.assertNotNull;
-import static org.ops4j.pax.exam.OptionUtils.combine;
+import static com.google.common.truth.Truth.assertThat;
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresence;
+import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
+import static org.awaitility.Awaitility.with;
+import static org.ops4j.pax.exam.CoreOptions.options;
+import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 
 @RunWith(PaxExam.class)
@@ -42,20 +54,63 @@ public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
     @Filter("(service.pid=org.apache.sling.clam.result.internal.ResourcePersistingScanResultHandler)")
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
+    @Inject
+    @Filter(value = "(path=/content/starter)")
+    private ResourcePresence resourcePresence;
+
+    @Inject
+    private NodeDescendingJcrPropertyDigger nodeDescendingJcrPropertyDigger;
+
     @Configuration
     public Option[] configuration() {
-        return combine(
-            super.configuration(),
+        return options(
+            baseConfiguration(),
+            clamdConfiguration(),
+            slingResourcePresence(),
+            factoryConfiguration("org.apache.sling.resource.presence.internal.ResourcePresenter")
+                .put("path", "/content/starter")
+                .asOption(),
             newConfiguration("org.apache.sling.clam.result.internal.ResourcePersistingScanResultHandler")
                 .put("result.status.ok.persist", true)
                 .put("result.root.path", "/var/clam/results")
-                .asOption()
+                .asOption(),
+            slingStarterContent()
         );
     }
 
     @Test
     public void testJcrPropertyScanResultHandler() {
-        assertNotNull(jcrPropertyScanResultHandler);
+        assertThat(jcrPropertyScanResultHandler).isNotNull();
+    }
+
+    @Test
+    public void testPersistedResults() throws Exception {
+        digBinaries(nodeDescendingJcrPropertyDigger, "/content/starter");
+        with().
+            pollInterval(10, SECONDS).
+            then().
+            await().
+            alias("counting results").
+            atMost(1, MINUTES).
+            until(() -> countResult() == 12);
+    }
+
+    protected QueryResult queryJcrResults(final Session session) throws RepositoryException {
+        final String query = "SELECT * FROM [nt:unstructured] AS result WHERE ISDESCENDANTNODE(result, \"/var/clam/results\") AND [sling:resourceType] = \"sling/clam/jcr/result\"";
+        return session.getWorkspace().getQueryManager().createQuery(query, Query.JCR_SQL2).execute();
+    }
+
+    private long countResult() throws RepositoryException {
+        Session session = null;
+        try {
+            session = session();
+            final QueryResult result = queryJcrResults(session);
+            return result.getNodes().getSize();
+        } finally {
+            if (session != null) {
+                session.logout();
+            }
+        }
     }
 
 }

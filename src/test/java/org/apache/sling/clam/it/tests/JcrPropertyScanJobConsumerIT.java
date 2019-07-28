@@ -30,7 +30,7 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.util.Filter;
 
-import static org.junit.Assert.assertNotNull;
+import static com.google.common.truth.Truth.assertThat;
 import static org.ops4j.pax.exam.CoreOptions.options;
 
 @RunWith(PaxExam.class)
@@ -50,7 +50,7 @@ public class JcrPropertyScanJobConsumerIT extends ClamTestSupport {
 
     @Test
     public void testJobConsumer() {
-        assertNotNull(jobConsumer);
+        assertThat(jobConsumer).isNotNull();
     }
 
 }

@@ -18,22 +18,51 @@
  */
 package org.apache.sling.clam.it.tests;
 
+import java.util.Collections;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+import javax.jcr.Node;
+import javax.jcr.PropertyType;
+import javax.jcr.RepositoryException;
+import javax.jcr.Session;
+
+import org.apache.sling.clam.it.support.ClamContainerFactory;
+import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
+import org.apache.sling.event.jobs.JobManager;
+import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.testing.paxexam.TestSupport;
 import org.ops4j.pax.exam.Option;
+import org.ops4j.pax.exam.options.ModifiableCompositeOption;
+import org.osgi.framework.BundleContext;
 
+import static org.apache.sling.testing.paxexam.SlingOptions.awaitility;
+import static org.apache.sling.testing.paxexam.SlingOptions.restassured;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingEvent;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingQuickstartOakTar;
+import static org.apache.sling.testing.paxexam.SlingOptions.testcontainers;
 import static org.apache.sling.testing.paxexam.SlingVersionResolver.SLING_GROUP_ID;
 import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
+import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 
 public abstract class ClamTestSupport extends TestSupport {
 
-    public Option[] configuration() {
-        return new Option[]{
-            baseConfiguration(),
+    @Inject
+    protected BundleContext bundleContext;
+
+    @Inject
+    protected SlingRepository slingRepository;
+
+    @Inject
+    protected JobManager jobManager;
+
+    protected ModifiableCompositeOption baseConfiguration() {
+        return composite(
+            super.baseConfiguration(),
             quickstart(),
             // Sling Clam
             testBundle("bundle.filename"),
@@ -46,9 +75,15 @@ public abstract class ClamTestSupport extends TestSupport {
             // Sling Commons Clam
             mavenBundle().groupId(SLING_GROUP_ID).artifactId("org.apache.sling.commons.clam").versionAsInProject(),
             // testing
-            mavenBundle().groupId("org.apache.servicemix.bundles").artifactId("org.apache.servicemix.bundles.hamcrest").versionAsInProject(),
-            junitBundles()
-        };
+            newConfiguration("org.apache.sling.jcr.base.internal.LoginAdminWhitelist")
+                .put("whitelist.bundles.regexp", "PAXEXAM-PROBE-.*")
+                .asOption(),
+            junitBundles(),
+            awaitility(),
+            restassured(),
+            testcontainers(),
+            wrappedBundle(mavenBundle().groupId("com.google.truth").artifactId("truth").versionAsInProject())
+        );
     }
 
     protected Option quickstart() {
@@ -58,6 +93,41 @@ public abstract class ClamTestSupport extends TestSupport {
             slingQuickstartOakTar(workingDirectory, httpPort),
             slingEvent()
         );
+    }
+
+    protected Option clamdConfiguration() {
+        final boolean testcontainer = Boolean.parseBoolean(System.getProperty("clamd.testcontainer", "true"));
+        final String host;
+        final Integer port;
+        if (testcontainer) {
+            host = ClamContainerFactory.container.getContainerIpAddress();
+            port = ClamContainerFactory.container.getFirstMappedPort();
+        } else {
+            host = System.getProperty("clamd.host", "localhost");
+            port = Integer.parseInt(System.getProperty("clamd.port", "3310"));
+        }
+        return newConfiguration("org.apache.sling.commons.clam.internal.ClamdService")
+            .put("clamd.host", host)
+            .put("clamd.port", port)
+            .asOption();
+    }
+
+    protected Session session() throws RepositoryException {
+        return slingRepository.loginAdministrative(null);
+    }
+
+    protected void digBinaries(final NodeDescendingJcrPropertyDigger digger, final String path) throws Exception {
+        Session session = null;
+        try {
+            session = session();
+            final Node starter = session.getNode(path);
+            final Pattern pattern = Pattern.compile("^/.*$");
+            digger.dig(starter, pattern, Collections.singleton(PropertyType.BINARY), -1, -1);
+        } finally {
+            if (session != null) {
+                session.logout();
+            }
+        }
     }
 
 }
