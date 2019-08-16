@@ -60,8 +60,8 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
     property = {
         Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam Events Servlet",
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=org.osgi.service.http)",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED + "=true"
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=org.apache.sling)", // org.osgi.service.http
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED + "=true",
         HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN + "=/system/clam-events",
         AuthConstants.AUTH_REQUIREMENTS + "=/system/clam-events"
     }
