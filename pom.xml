@@ -120,6 +120,25 @@
       <artifactId>javax.servlet-api</artifactId>
       <scope>provided</scope>
     </dependency>
+    <!-- ok io/http -->
+    <dependency>
+      <groupId>org.apache.servicemix.bundles</groupId>
+      <artifactId>org.apache.servicemix.bundles.okio</artifactId>
+      <version>1.15.0_1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.servicemix.bundles</groupId>
+      <artifactId>org.apache.servicemix.bundles.okhttp</artifactId>
+      <version>3.11.0_1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.launchdarkly</groupId>
+      <artifactId>okhttp-eventsource</artifactId>
+      <version>1.10.0</version>
+      <scope>test</scope>
+    </dependency>
     <!-- OSGi -->
     <dependency>
       <groupId>org.osgi</groupId>
