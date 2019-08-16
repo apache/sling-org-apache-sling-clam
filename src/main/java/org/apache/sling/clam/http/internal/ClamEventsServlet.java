@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.sling.auth.core.AuthConstants;
 import org.apache.sling.clam.result.JcrPropertyScanResultHandler;
 import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
@@ -61,6 +62,8 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
         HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=org.osgi.service.http)",
         HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED + "=true"
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN + "=/system/clam-events",
+        AuthConstants.AUTH_REQUIREMENTS + "=/system/clam-events"
     }
 )
 @Designate(
