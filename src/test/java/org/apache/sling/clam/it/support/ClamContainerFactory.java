@@ -30,8 +30,10 @@ public class ClamContainerFactory {
         .withExposedPorts(3310)
         .withStartupTimeout(Duration.ofMinutes(3));
 
-    static {
-        container.start();
+    public static void startContainer() {
+        if (!container.isRunning()) {
+            container.start();
+        }
     }
 
 }
