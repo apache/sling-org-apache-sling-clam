@@ -29,6 +29,7 @@ import javax.jcr.Session;
 
 import org.apache.sling.clam.it.support.ClamContainerFactory;
 import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
+import org.apache.sling.commons.clam.ClamService;
 import org.apache.sling.event.jobs.JobManager;
 import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.testing.paxexam.TestSupport;
@@ -56,6 +57,9 @@ public abstract class ClamTestSupport extends TestSupport {
 
     @Inject
     protected SlingRepository slingRepository;
+
+    @Inject
+    protected ClamService clamService;
 
     @Inject
     protected JobManager jobManager;
