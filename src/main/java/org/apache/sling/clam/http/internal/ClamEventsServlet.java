@@ -68,7 +68,7 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
 )
 public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
 
-    private List<Client> clients = Collections.synchronizedList(new ArrayList<>());
+    private final List<Client> clients = Collections.synchronizedList(new ArrayList<>());
 
     private final AtomicLong counter = new AtomicLong(0);
 
@@ -102,7 +102,9 @@ public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanRes
 
     private void addEvent(final String type, final String data) {
         final Event event = new Event(type, data);
-        clients.iterator().forEachRemaining(client -> client.addEvent(event));
+        synchronized (clients) {
+            clients.iterator().forEachRemaining(client -> client.addEvent(event));
+        }
     }
 
     private class Event {
