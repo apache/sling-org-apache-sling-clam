@@ -30,3 +30,43 @@ The service requires read-only access to all paths to be scanned which can be al
 `EventPublishingScanResultHandler` publishes scan results via OSGi Event Admin Service.
 
 `ResourcePersistingScanResultHandler` persists scan results via ResourceResolver in JCR. The result handler requires write access to a configurable root path for subservice `result-writer`.
+
+
+## HTTP API
+
+Scanning all binaries and strings in AEM Assets:
+
+    curl -v -u username:password -F path=/content/dam -F pattern=^/.*$ -F propertyTypes[]=Binary -F propertyTypes[]=String http://localhost:4502/system/clam-jcr-scan
+
+Observing Sling Clam events:
+
+    curl -v -u username:password http://localhost:4502/system/clam-events
+
+
+## Useful Patterns
+
+    ^\/(?!.*\/rep:principalName)(.*)$
+
+
+## Integration Tests
+
+Integration tests require a running Clam daemon and are not enabled by default.
+
+
+### Use [Testcontainers](https://www.testcontainers.org/) and local [Docker](https://www.docker.com/) Engine
+
+Enable the `it` profile to run integration tests with Docker container:
+
+    mvn clean install -Pit
+
+
+### Use external Clam daemon
+
+To disable *Testcontainers* and use an external Clam daemon set `clamd.testcontainer` to `false`:
+
+    mvn clean install -Pit -Dclamd.testcontainer=false
+
+To override default Clam daemon host `localhost` and port `3310` set `clamd.host` and `clamd.port`:
+
+    mvn clean install -Pit -Dclamd.testcontainer=false -Dclamd.host=localhost -Dclamd.port=3310
+
