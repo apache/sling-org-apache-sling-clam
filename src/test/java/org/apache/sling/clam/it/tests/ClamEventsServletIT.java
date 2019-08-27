@@ -101,6 +101,18 @@ public class ClamEventsServletIT extends ClamTestSupport {
     }
 
     @Test
+    public void testContentType() throws Exception {
+        final String url = String.format(URL_TEMPLATE, httpPort());
+        given()
+            .when()
+            .auth()
+            .basic(ADMIN_USERNAME, ADMIN_PASSWORD)
+            .get(url)
+            .then()
+            .contentType("text/event-stream;charset=utf-8");
+    }
+
+    @Test
     public void testEvents() throws Exception {
         final RecordingEventHandler recordingEventHandler = new RecordingEventHandler();
 
