@@ -23,19 +23,19 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(
     name = "Apache Sling Clam Events Servlet",
-    description = "TODO"
+    description = "Servlet to stream Clam events via HTTP"
 )
 @interface ClamEventsServletConfiguration {
 
     @AttributeDefinition(
-        name = "TODO",
-        description = "TODO"
+        name = "OSGi HTTP whiteboard servlet pattern",
+        description = "Patterns under which this servlet is available"
     )
     String[] osgi_http_whiteboard_servlet_pattern() default {"/system/clam-events"};
 
     @AttributeDefinition(
-        name = "TODO",
-        description = "TODO"
+        name = "Sling authentication requirements",
+        description = "Additional Sling authentication requirements, defaults to Sling Clam Events Servlet pattern"
     )
     String[] sling_auth_requirements() default {"/system/clam-events"};
 

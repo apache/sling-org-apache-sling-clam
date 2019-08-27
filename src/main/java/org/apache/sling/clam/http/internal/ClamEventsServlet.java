@@ -60,7 +60,7 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
     property = {
         Constants.SERVICE_DESCRIPTION + "=Apache Sling Clam Events Servlet",
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation",
-        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=org.apache.sling)", // org.osgi.service.http
+        HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT + "=(osgi.http.whiteboard.context.name=org.apache.sling)",
         HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED + "=true",
         HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN + "=/system/clam-events",
         AuthConstants.AUTH_REQUIREMENTS + "=/system/clam-events"
@@ -184,7 +184,7 @@ public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanRes
 
         private void addEvent(final Event event) {
             final long count = counter.incrementAndGet();
-            logger.info("adding event: {}", count);
+            logger.debug("adding event: {}", count);
             events.add(event);
             try {
                 onWritePossible();

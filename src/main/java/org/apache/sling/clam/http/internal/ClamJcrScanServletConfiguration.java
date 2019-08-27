@@ -24,19 +24,19 @@ import org.osgi.service.metatype.annotations.Option;
 
 @ObjectClassDefinition(
     name = "Apache Sling Clam JCR Scan Servlet",
-    description = "TODO"
+    description = "Servlet to trigger digging JCR properties via HTTP"
 )
 @interface ClamJcrScanServletConfiguration {
 
     @AttributeDefinition(
-        name = "TODO",
-        description = "TODO"
+        name = "Sling servlet paths",
+        description = "Paths under which this servlet is available"
     )
     String[] sling_servlet_paths() default {"/system/clam-jcr-scan"};
 
     @AttributeDefinition(
-        name = "TODO",
-        description = "TODO"
+        name = "Sling authentication requirements",
+        description = "Additional Sling authentication requirements, defaults to Sling Clam JCR Scan Servlet path"
     )
     String[] sling_auth_requirements() default {"/system/clam-jcr-scan"};
 
