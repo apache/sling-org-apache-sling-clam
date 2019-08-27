@@ -100,11 +100,13 @@ public class JcrPropertyScanJobConsumer implements JobConsumer {
                 final Value[] values = property.getValues();
                 final Value value = values[index];
                 try (final InputStream inputStream = getInputStream(value)) {
+                    logger.debug("scanning property of type {} at {} [{}]", PropertyType.nameFromValue(propertyType), path, index);
                     final ScanResult scanResult = clamService.scan(inputStream);
                     invokeScanResultHandlers(scanResult, path, index, propertyType, userId);
                 }
             } else { // single property value
                 try (final InputStream inputStream = getInputStream(property.getValue())) {
+                    logger.debug("scanning property of type {} at {}", PropertyType.nameFromValue(propertyType), path);
                     final ScanResult scanResult = clamService.scan(inputStream);
                     invokeScanResultHandlers(scanResult, path, null, propertyType, userId);
                 }
