@@ -64,6 +64,10 @@ public abstract class ClamTestSupport extends TestSupport {
     @Inject
     protected JobManager jobManager;
 
+    static final String ADMIN_USERNAME = "admin";
+
+    static final String ADMIN_PASSWORD = "admin";
+
     protected ModifiableCompositeOption baseConfiguration() {
         return composite(
             super.baseConfiguration(),

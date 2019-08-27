@@ -72,7 +72,8 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
         given()
             .when()
             .post(url)
-            .then().statusCode(401);
+            .then()
+            .statusCode(401);
     }
 
     @Test
@@ -82,11 +83,13 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
 
         final String url = String.format(URL_TEMPLATE, httpPort());
         given()
-            .auth().basic("admin", "admin")
+            .auth()
+            .basic(ADMIN_USERNAME, ADMIN_PASSWORD)
             .param("path", "/content/starter")
             .when()
             .post(url)
-            .then().statusCode(200);
+            .then()
+            .statusCode(200);
 
         with()
             .pollInterval(10, SECONDS)
