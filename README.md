@@ -50,23 +50,16 @@ Observing Sling Clam events:
 
 ## Integration Tests
 
-Integration tests require a running Clam daemon and are not enabled by default.
-
-
-### Use [Testcontainers](https://www.testcontainers.org/) and local [Docker](https://www.docker.com/) Engine
-
-Enable the `it` profile to run integration tests with Docker container:
-
-    mvn clean install -Pit
+Integration tests require a running Clam daemon. By default a Docker container (`mk0x/docker-clamav:alpine`) is started via [Testcontainers](https://www.testcontainers.org/) and local [Docker](https://www.docker.com/) Engine to provide the Clam daemon.
 
 
 ### Use external Clam daemon
 
 To disable *Testcontainers* and use an external Clam daemon set `clamd.testcontainer` to `false`:
 
-    mvn clean install -Pit -Dclamd.testcontainer=false
+    mvn clean install -Dclamd.testcontainer=false
 
 To override default Clam daemon host `localhost` and port `3310` set `clamd.host` and `clamd.port`:
 
-    mvn clean install -Pit -Dclamd.testcontainer=false -Dclamd.host=localhost -Dclamd.port=3310
+    mvn clean install -Dclamd.testcontainer=false -Dclamd.host=localhost -Dclamd.port=3310
 
