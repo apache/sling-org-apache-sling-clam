@@ -28,7 +28,7 @@ public class ClamContainerFactory {
 
     public static GenericContainer container = new GenericContainer<>(CLAM_CONTAINER_IMAGE_NAME)
         .withExposedPorts(3310)
-        .withStartupTimeout(Duration.ofMinutes(3));
+        .withStartupTimeout(Duration.ofMinutes(5));
 
     public static void startContainer() {
         if (!container.isRunning()) {
