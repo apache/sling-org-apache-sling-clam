@@ -55,7 +55,7 @@ public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
-    @Filter(value = "(path=/content/starter)")
+    @Filter(value = "(path=/content/starter)", timeout = 60000)
     private ResourcePresence resourcePresence;
 
     @Inject
