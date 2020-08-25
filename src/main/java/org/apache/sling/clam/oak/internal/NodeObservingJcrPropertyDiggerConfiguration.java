@@ -27,6 +27,7 @@ import org.osgi.service.metatype.annotations.Option;
     name = "Apache Sling Clam Node Observing JCR Property Digger",
     description = "Observes the node store and adds scan jobs for matching JCR properties"
 )
+@SuppressWarnings("java:S100")
 @interface NodeObservingJcrPropertyDiggerConfiguration {
 
     @AttributeDefinition(

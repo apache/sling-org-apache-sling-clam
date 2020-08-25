@@ -25,6 +25,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     name = "Apache Sling Clam Event Publishing Scan Result Handler",
     description = "Publishes JCR property scan results via Event Admin Service"
 )
+@SuppressWarnings("java:S100")
 @interface EventPublishingScanResultHandlerConfiguration {
 
     @AttributeDefinition(

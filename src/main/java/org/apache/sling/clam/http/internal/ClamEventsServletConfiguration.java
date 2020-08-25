@@ -25,6 +25,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     name = "Apache Sling Clam Events Servlet",
     description = "Servlet to stream Clam events via HTTP"
 )
+@SuppressWarnings("java:S100")
 @interface ClamEventsServletConfiguration {
 
     @AttributeDefinition(

@@ -26,6 +26,7 @@ import org.osgi.service.metatype.annotations.Option;
     name = "Apache Sling Clam JCR Scan Servlet",
     description = "Servlet to trigger digging JCR properties via HTTP"
 )
+@SuppressWarnings("java:S100")
 @interface ClamJcrScanServletConfiguration {
 
     @AttributeDefinition(

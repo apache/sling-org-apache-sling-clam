@@ -25,6 +25,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     name = "Apache Sling Clam Resource Persisting Scan Result Handler",
     description = "Persists JCR property scan results as resource"
 )
+@SuppressWarnings("java:S100")
 @interface ResourcePersistingScanResultHandlerConfiguration {
 
     @AttributeDefinition(
