@@ -48,7 +48,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfigurati
 public class ClamJcrScanServletIT extends ClamTestSupport {
 
     @Inject
-    @Filter(value = "(path=/content/starter)", timeout = 120000)
+    @Filter(value = "(path=/content/starter)", timeout = 300000)
     private ResourcePresence resourcePresence;
 
     private static final String URL_TEMPLATE = "http://localhost:%s/system/clam-jcr-scan";

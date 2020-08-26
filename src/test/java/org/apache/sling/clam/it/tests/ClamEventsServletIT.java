@@ -61,7 +61,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfigurati
 public class ClamEventsServletIT extends ClamTestSupport {
 
     @Inject
-    @Filter(value = "(path=/content/starter)", timeout = 120000)
+    @Filter(value = "(path=/content/starter)", timeout = 300000)
     private ResourcePresence resourcePresence;
 
     @Inject
