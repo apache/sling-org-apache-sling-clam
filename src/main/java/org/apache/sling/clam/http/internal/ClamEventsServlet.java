@@ -110,7 +110,7 @@ public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanRes
         }
     }
 
-    private class Event {
+    private static class Event {
 
         final String type;
 
