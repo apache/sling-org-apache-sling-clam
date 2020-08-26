@@ -66,6 +66,7 @@ import static org.apache.sling.clam.internal.ClamUtil.propertyTypesFromNames;
 @Designate(
     ocd = ClamJcrScanServletConfiguration.class
 )
+@SuppressWarnings("java:S1948")
 public class ClamJcrScanServlet extends SlingAllMethodsServlet {
 
     @Reference(
