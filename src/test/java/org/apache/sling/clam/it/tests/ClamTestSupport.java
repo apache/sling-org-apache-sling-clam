@@ -71,6 +71,11 @@ public abstract class ClamTestSupport extends TestSupport {
 
     protected ModifiableCompositeOption baseConfiguration() {
         return composite(
+            // Truth first to prevent version issues with Guava
+            wrappedBundle(mavenBundle().groupId("com.google.truth").artifactId("truth").versionAsInProject()),
+            mavenBundle().groupId("com.google.guava").artifactId("guava").versionAsInProject(),
+            mavenBundle().groupId("com.google.guava").artifactId("failureaccess").versionAsInProject(),
+            mavenBundle().groupId("com.googlecode.java-diff-utils").artifactId("diffutils").versionAsInProject(),
             super.baseConfiguration(),
             quickstart(),
             // Sling Clam
@@ -91,7 +96,6 @@ public abstract class ClamTestSupport extends TestSupport {
             awaitility(),
             restassured(),
             testcontainers(),
-            wrappedBundle(mavenBundle().groupId("com.google.truth").artifactId("truth").versionAsInProject()),
             vmOption(System.getProperty("jacoco.command"))
         );
     }
