@@ -97,7 +97,7 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
             .await()
             .alias("counting results")
             .atMost(1, MINUTES)
-            .until(() -> scanResultHandler.getResults().size() == 12);
+            .until(() -> scanResultHandler.getResults().size() == 8);
     }
 
 }

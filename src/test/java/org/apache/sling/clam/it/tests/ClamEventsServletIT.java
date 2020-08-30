@@ -134,7 +134,7 @@ public class ClamEventsServletIT extends ClamTestSupport {
             await().
             alias("counting results").
             atMost(1, MINUTES).
-            until(() -> recordingEventHandler.countEvents() == 12);
+            until(() -> recordingEventHandler.countEvents() == 8);
     }
 
     class BasicAuthInterceptor implements Interceptor {

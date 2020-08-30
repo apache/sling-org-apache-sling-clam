@@ -92,7 +92,7 @@ public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
             await().
             alias("counting results").
             atMost(1, MINUTES).
-            until(() -> countResult() == 12);
+            until(() -> countResult() == 8);
     }
 
     protected QueryResult queryJcrResults(final Session session) throws RepositoryException {
