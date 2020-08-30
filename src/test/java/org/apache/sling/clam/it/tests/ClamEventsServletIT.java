@@ -137,9 +137,9 @@ public class ClamEventsServletIT extends ClamTestSupport {
             until(() -> recordingEventHandler.countEvents() == 8);
     }
 
-    class BasicAuthInterceptor implements Interceptor {
+    static class BasicAuthInterceptor implements Interceptor {
 
-        private String credentials;
+        private final String credentials;
 
         BasicAuthInterceptor(final String user, final String password) {
             this.credentials = Credentials.basic(user, password);
@@ -156,7 +156,7 @@ public class ClamEventsServletIT extends ClamTestSupport {
 
     }
 
-    class RecordingEventHandler implements EventHandler {
+    static class RecordingEventHandler implements EventHandler {
 
         private final List<String> events = new ArrayList<>();
 
