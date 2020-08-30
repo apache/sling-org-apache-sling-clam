@@ -64,7 +64,8 @@ import static org.apache.sling.clam.internal.ClamUtil.properties;
     }
 )
 @Designate(
-    ocd = ResourcePersistingScanResultHandlerConfiguration.class
+    ocd = ResourcePersistingScanResultHandlerConfiguration.class,
+    factory = true
 )
 public class ResourcePersistingScanResultHandler implements JcrPropertyScanResultHandler {
 

@@ -40,4 +40,6 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
     )
     String result_root_path() default "/var/clam/results";
 
+    String webconsole_configurationFactory_nameHint() default "{result.status.ok.persist}:{result.root.path}";
+
 }
