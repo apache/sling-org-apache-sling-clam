@@ -24,9 +24,19 @@ import java.util.regex.Pattern;
 import javax.jcr.Node;
 
 import org.jetbrains.annotations.NotNull;
+import org.osgi.annotation.versioning.ProviderType;
 
+@ProviderType
 public interface NodeDescendingJcrPropertyDigger {
 
+    /**
+     * @param node          The entry node for digging
+     * @param pattern       The pattern a property path has to match
+     * @param propertyTypes The property types to take into account
+     * @param maxLength     The maximum length of a property value
+     * @param maxDepth      The maximum depth from entry node for digging
+     * @throws Exception if digging in JCR fails
+     */
     void dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception;
 
 }

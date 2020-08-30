@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-@Version("1.0.0")
+@Version("1.0.1")
 package org.apache.sling.clam.jcr;
 
 import org.osgi.annotation.versioning.Version;
