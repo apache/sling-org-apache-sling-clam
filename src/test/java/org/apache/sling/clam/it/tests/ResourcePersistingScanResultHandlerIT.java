@@ -51,7 +51,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
 
     @Inject
-    @Filter("(service.pid=org.apache.sling.clam.result.internal.ResourcePersistingScanResultHandler)")
+    @Filter(value = "(service.pid=org.apache.sling.clam.result.internal.ResourcePersistingScanResultHandler)", timeout = 300000)
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
