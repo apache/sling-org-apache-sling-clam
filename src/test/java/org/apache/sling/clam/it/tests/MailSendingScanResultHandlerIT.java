@@ -42,8 +42,6 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.util.Filter;
 import org.ops4j.pax.exam.util.PathUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.apache.sling.testing.paxexam.SlingOptions.greenmail;
@@ -72,8 +70,6 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
     private NodeDescendingJcrPropertyDigger nodeDescendingJcrPropertyDigger;
 
     private GreenMail greenMail;
-
-    private final Logger logger = LoggerFactory.getLogger(MailSendingScanResultHandlerIT.class);
 
     @Configuration
     public Option[] configuration() {
