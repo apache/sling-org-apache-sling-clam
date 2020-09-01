@@ -41,6 +41,9 @@ public final class ClamUtil {
 
     private static final String RESULT_EVENT_TOPIC_ROOT = "org/apache/sling/clam/result/jcr/property";
 
+    private ClamUtil() {
+    }
+
     public static String scanJobTopic(final int propertyType) {
         return String.format("%s/%s", SCAN_JOB_TOPIC_ROOT, PropertyType.nameFromValue(propertyType));
     }

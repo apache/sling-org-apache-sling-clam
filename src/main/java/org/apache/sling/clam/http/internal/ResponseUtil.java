@@ -25,6 +25,7 @@ import javax.jcr.PropertyType;
 import javax.json.Json;
 import javax.json.JsonException;
 import javax.json.JsonObjectBuilder;
+import javax.json.stream.JsonGenerator;
 import javax.servlet.ServletException;
 
 import org.apache.sling.api.SlingHttpServletResponse;
@@ -45,7 +46,9 @@ public class ResponseUtil {
             if (message != null) {
                 final JsonObjectBuilder error = Json.createObjectBuilder();
                 error.add("message", message);
-                Json.createGenerator(response.getWriter()).write(error.build()).flush();
+                try (final JsonGenerator generator = Json.createGenerator(response.getWriter())) {
+                    generator.write(error.build()).flush();
+                }
             }
         } catch (final JsonException e) {
             throw new ServletException("Building response failed.");

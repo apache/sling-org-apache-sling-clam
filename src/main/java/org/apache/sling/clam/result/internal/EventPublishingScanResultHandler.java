@@ -63,7 +63,7 @@ public class EventPublishingScanResultHandler implements JcrPropertyScanResultHa
 
     private final Logger logger = LoggerFactory.getLogger(EventPublishingScanResultHandler.class);
 
-    public EventPublishingScanResultHandler() {
+    public EventPublishingScanResultHandler() { //
     }
 
     @Activate

@@ -85,7 +85,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
 
     private ResourcePersistingScanResultHandlerConfiguration configuration;
 
-    private static final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
+    private final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
 
     private static final String NT_SLING_ORDERED_FOLDER = "sling:OrderedFolder";
 
@@ -97,7 +97,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
 
     private final Logger logger = LoggerFactory.getLogger(ResourcePersistingScanResultHandler.class);
 
-    public ResourcePersistingScanResultHandler() {
+    public ResourcePersistingScanResultHandler() { //
     }
 
     @Activate
@@ -157,7 +157,7 @@ public class ResourcePersistingScanResultHandler implements JcrPropertyScanResul
     }
 
     private Resource getOrCreateParent(final ResourceResolver resourceResolver) throws PersistenceException {
-        final String path = String.format("%s/%s", configuration.result_root_path(), FORMAT.format(new Date()));
+        final String path = String.format("%s/%s", configuration.result_root_path(), format.format(new Date()));
         return ResourceUtil.getOrCreateResource(resourceResolver, path, NT_SLING_ORDERED_FOLDER, NT_SLING_ORDERED_FOLDER, true);
     }
 

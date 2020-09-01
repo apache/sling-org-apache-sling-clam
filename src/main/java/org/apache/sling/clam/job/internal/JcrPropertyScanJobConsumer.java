@@ -84,7 +84,7 @@ public class JcrPropertyScanJobConsumer implements JobConsumer {
 
     private final Logger logger = LoggerFactory.getLogger(JcrPropertyScanJobConsumer.class);
 
-    public JcrPropertyScanJobConsumer() {
+    public JcrPropertyScanJobConsumer() { //
     }
 
     @Override

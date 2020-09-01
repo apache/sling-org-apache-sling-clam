@@ -59,7 +59,7 @@ public class DefaultNodeDescendingJcrPropertyDigger implements NodeDescendingJcr
 
     private final Logger logger = LoggerFactory.getLogger(DefaultNodeDescendingJcrPropertyDigger.class);
 
-    public DefaultNodeDescendingJcrPropertyDigger() {
+    public DefaultNodeDescendingJcrPropertyDigger() { //
     }
 
     public void dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception {

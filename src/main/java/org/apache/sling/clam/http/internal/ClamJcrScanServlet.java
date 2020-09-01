@@ -83,7 +83,7 @@ public class ClamJcrScanServlet extends SlingAllMethodsServlet {
 
     private final Logger logger = LoggerFactory.getLogger(ClamJcrScanServlet.class);
 
-    public ClamJcrScanServlet() {
+    public ClamJcrScanServlet() { //
     }
 
     @Activate

@@ -79,7 +79,7 @@ public class MailSendingScanResultHandler implements JcrPropertyScanResultHandle
 
     private final Logger logger = LoggerFactory.getLogger(MailSendingScanResultHandler.class);
 
-    public MailSendingScanResultHandler() {
+    public MailSendingScanResultHandler() { //
     }
 
     @Activate
