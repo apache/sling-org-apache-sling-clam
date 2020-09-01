@@ -67,6 +67,7 @@ import static org.apache.sling.clam.internal.ClamUtil.properties;
     ocd = ResourcePersistingScanResultHandlerConfiguration.class,
     factory = true
 )
+@SuppressWarnings("java:S3077")
 public class ResourcePersistingScanResultHandler implements JcrPropertyScanResultHandler {
 
     @Reference(

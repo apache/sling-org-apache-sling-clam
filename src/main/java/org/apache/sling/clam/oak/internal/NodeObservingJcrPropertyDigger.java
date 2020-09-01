@@ -65,6 +65,7 @@ import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
     ocd = NodeObservingJcrPropertyDiggerConfiguration.class,
     factory = true
 )
+@SuppressWarnings("java:S3077")
 public class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Reference(

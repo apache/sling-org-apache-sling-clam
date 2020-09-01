@@ -48,6 +48,7 @@ import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation"
     }
 )
+@SuppressWarnings("java:S3077")
 public class DefaultNodeDescendingJcrPropertyDigger implements NodeDescendingJcrPropertyDigger {
 
     @Reference(

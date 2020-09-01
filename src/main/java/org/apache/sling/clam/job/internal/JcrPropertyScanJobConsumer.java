@@ -54,6 +54,7 @@ import org.slf4j.LoggerFactory;
         Constants.SERVICE_VENDOR + "=The Apache Software Foundation"
     }
 )
+@SuppressWarnings("java:S3077")
 public class JcrPropertyScanJobConsumer implements JobConsumer {
 
     @Reference(
