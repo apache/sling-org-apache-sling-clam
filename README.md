@@ -27,7 +27,11 @@ The service requires read-only access to all paths to be scanned which can be al
 
 ## Handling of scan results
 
+`ClamEventsServlet` publishes scan results as [Server-Sent Events](https://html.spec.whatwg.org/multipage/server-sent-events.html) via [HTTP](#http-api).
+
 `EventPublishingScanResultHandler` publishes scan results via OSGi Event Admin Service.
+
+`MailSendingScanResultHandler` sends scan results as mails via [Sling Commons Messaging Mail](https://github.com/apache/sling-org-apache-sling-commons-messaging-mail).
 
 `ResourcePersistingScanResultHandler` persists scan results via ResourceResolver in JCR. The result handler requires write access to a configurable root path for subservice `result-writer`.
 
