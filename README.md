@@ -38,7 +38,7 @@ Scanning all binaries and strings in AEM Assets:
 
     curl -v -u username:password -F path=/content/dam -F pattern=^/.*$ -F propertyTypes[]=Binary -F propertyTypes[]=String http://localhost:4502/system/clam-jcr-scan
 
-Observing Sling Clam events:
+Listening to Sling Clam events:
 
     curl -v -u username:password http://localhost:4502/system/clam-events
 
