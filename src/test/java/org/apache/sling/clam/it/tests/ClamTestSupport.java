@@ -19,6 +19,7 @@
 package org.apache.sling.clam.it.tests;
 
 import java.util.Collections;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -35,6 +36,8 @@ import org.apache.sling.jcr.api.SlingRepository;
 import org.apache.sling.testing.paxexam.TestSupport;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.options.ModifiableCompositeOption;
+import org.ops4j.pax.exam.options.OptionalCompositeOption;
+import org.ops4j.pax.exam.options.extra.VMOption;
 import org.osgi.framework.BundleContext;
 
 import static org.apache.sling.testing.paxexam.SlingOptions.awaitility;
@@ -47,6 +50,7 @@ import static org.ops4j.pax.exam.CoreOptions.composite;
 import static org.ops4j.pax.exam.CoreOptions.junitBundles;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.vmOption;
+import static org.ops4j.pax.exam.CoreOptions.when;
 import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
@@ -96,8 +100,15 @@ public abstract class ClamTestSupport extends TestSupport {
             awaitility(),
             restassured(),
             testcontainers(),
-            vmOption(System.getProperty("jacoco.command"))
+            jacoco() // remove with Testing PaxExam 4.0
         );
+    }
+
+    // remove with Testing PaxExam 4.0
+    protected OptionalCompositeOption jacoco() {
+        final String jacocoCommand = System.getProperty("jacoco.command");
+        final VMOption option = Objects.nonNull(jacocoCommand) && !jacocoCommand.trim().isEmpty() ? vmOption(jacocoCommand) : null;
+        return when(Objects.nonNull(option)).useOptions(option);
     }
 
     protected Option quickstart() {
