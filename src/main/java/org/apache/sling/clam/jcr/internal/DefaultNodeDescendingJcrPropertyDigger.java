@@ -49,7 +49,7 @@ import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
     }
 )
 @SuppressWarnings("java:S3077")
-public class DefaultNodeDescendingJcrPropertyDigger implements NodeDescendingJcrPropertyDigger {
+public final class DefaultNodeDescendingJcrPropertyDigger implements NodeDescendingJcrPropertyDigger {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,

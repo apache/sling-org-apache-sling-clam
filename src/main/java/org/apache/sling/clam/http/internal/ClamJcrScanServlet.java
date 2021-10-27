@@ -67,7 +67,7 @@ import static org.apache.sling.clam.internal.ClamUtil.propertyTypesFromNames;
     ocd = ClamJcrScanServletConfiguration.class
 )
 @SuppressWarnings({"java:S1948", "java:S3077"})
-public class ClamJcrScanServlet extends SlingAllMethodsServlet {
+public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,

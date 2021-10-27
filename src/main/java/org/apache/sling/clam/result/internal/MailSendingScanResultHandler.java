@@ -65,7 +65,7 @@ import static org.apache.sling.clam.internal.ClamUtil.properties;
     factory = true
 )
 @SuppressWarnings("java:S3077")
-public class MailSendingScanResultHandler implements JcrPropertyScanResultHandler {
+public final class MailSendingScanResultHandler implements JcrPropertyScanResultHandler {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,

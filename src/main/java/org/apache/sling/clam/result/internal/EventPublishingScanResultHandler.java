@@ -51,7 +51,7 @@ import static org.apache.sling.clam.internal.ClamUtil.resultEventTopic;
     ocd = EventPublishingScanResultHandlerConfiguration.class
 )
 @SuppressWarnings("java:S3077")
-public class EventPublishingScanResultHandler implements JcrPropertyScanResultHandler {
+public final class EventPublishingScanResultHandler implements JcrPropertyScanResultHandler {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,

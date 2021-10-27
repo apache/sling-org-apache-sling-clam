@@ -55,7 +55,7 @@ import org.slf4j.LoggerFactory;
     }
 )
 @SuppressWarnings("java:S3077")
-public class JcrPropertyScanJobConsumer implements JobConsumer {
+public final class JcrPropertyScanJobConsumer implements JobConsumer {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,

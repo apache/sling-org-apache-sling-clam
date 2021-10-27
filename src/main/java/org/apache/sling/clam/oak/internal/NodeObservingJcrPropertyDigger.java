@@ -66,7 +66,7 @@ import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
     factory = true
 )
 @SuppressWarnings("java:S3077")
-public class NodeObservingJcrPropertyDigger extends NodeObserver {
+public final class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Reference(
         policy = ReferencePolicy.DYNAMIC,

@@ -70,7 +70,7 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
     ocd = ClamEventsServletConfiguration.class
 )
 @SuppressWarnings("java:S1948")
-public class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
+public final class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
 
     private final List<Client> clients = Collections.synchronizedList(new ArrayList<>());
 
