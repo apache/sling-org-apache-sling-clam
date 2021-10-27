@@ -89,7 +89,7 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
 
     @Override
     public JobResult process(final Job job) {
-        try (final ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
+        try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
             final String path = job.getProperty(ClamUtil.PROPERTY_PATH, String.class);
             final String userId = job.getProperty(ClamUtil.USER_ID, String.class);
             final Session session = resourceResolver.adaptTo(Session.class);
@@ -100,13 +100,13 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
                 final int index = job.getProperty(ClamUtil.VALUE_INDEX, Integer.class);
                 final Value[] values = property.getValues();
                 final Value value = values[index];
-                try (final InputStream inputStream = getInputStream(value)) {
+                try (InputStream inputStream = getInputStream(value)) {
                     logger.debug("scanning property of type {} at {} [{}]", PropertyType.nameFromValue(propertyType), path, index);
                     final ScanResult scanResult = clamService.scan(inputStream);
                     invokeScanResultHandlers(scanResult, path, index, propertyType, userId);
                 }
             } else { // single property value
-                try (final InputStream inputStream = getInputStream(property.getValue())) {
+                try (InputStream inputStream = getInputStream(property.getValue())) {
                     logger.debug("scanning property of type {} at {}", PropertyType.nameFromValue(propertyType), path);
                     final ScanResult scanResult = clamService.scan(inputStream);
                     invokeScanResultHandlers(scanResult, path, null, propertyType, userId);

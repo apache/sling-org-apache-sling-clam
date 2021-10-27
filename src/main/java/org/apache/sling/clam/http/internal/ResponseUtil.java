@@ -46,7 +46,7 @@ public final class ResponseUtil {
             if (message != null) {
                 final JsonObjectBuilder error = Json.createObjectBuilder();
                 error.add("message", message);
-                try (final JsonGenerator generator = Json.createGenerator(response.getWriter())) {
+                try (JsonGenerator generator = Json.createGenerator(response.getWriter())) {
                     generator.write(error.build()).flush();
                 }
             }

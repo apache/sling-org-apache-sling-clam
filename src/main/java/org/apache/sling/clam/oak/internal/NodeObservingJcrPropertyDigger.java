@@ -197,7 +197,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
         @Override
         public void run() {
             final Set<String> paths = filter(path, names, pattern);
-            try (final ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
+            try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
                 final Session session = resourceResolver.adaptTo(Session.class);
                 assert session != null;
                 for (final String path : paths) {

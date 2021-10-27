@@ -137,7 +137,7 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     }
 
     private void persistResult(@NotNull ScanResult scanResult, @NotNull String path, Integer index, int propertyType, @Nullable String userId) {
-        try (final ResourceResolver resourceResolver = serviceResourceResolver()) {
+        try (ResourceResolver resourceResolver = serviceResourceResolver()) {
             final Map<String, Object> properties = properties(path, index, userId, scanResult);
             properties.put(JCR_PRIMARYTYPE, NT_UNSTRUCTURED);
             properties.put(JCR_MIXINTYPES, MIX_CREATED);
