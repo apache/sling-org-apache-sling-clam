@@ -37,6 +37,6 @@ public interface NodeDescendingJcrPropertyDigger {
      * @param maxDepth      The maximum depth from entry node for digging
      * @throws Exception if digging in JCR fails
      */
-    void dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception;
+    public abstract void dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception;
 
 }

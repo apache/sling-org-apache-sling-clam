@@ -32,7 +32,7 @@ public interface JcrPropertyScanResultHandler {
      * @param propertyType The type of the scanned property
      * @param userId       The id of the user who added or changed the property
      */
-    void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId);
+    public abstract void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId);
 
     /**
      * @param scanResult   The scan result from Clam service
@@ -41,6 +41,6 @@ public interface JcrPropertyScanResultHandler {
      * @param propertyType The type of the scanned property
      * @param userId       The id of the user who added or changed the property
      */
-    void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int index, final int propertyType, @Nullable final String userId);
+    public abstract void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int index, final int propertyType, @Nullable final String userId);
 
 }
