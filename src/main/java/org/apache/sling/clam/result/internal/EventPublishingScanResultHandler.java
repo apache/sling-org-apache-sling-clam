@@ -85,7 +85,7 @@ public final class EventPublishingScanResultHandler implements JcrPropertyScanRe
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int propertyType, @Nullable String userId) {
+    public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId) {
         if (checkPublish(scanResult)) {
             final Event event = new Event(resultEventTopic(propertyType), properties(path, userId, scanResult));
             eventAdmin.postEvent(event);
@@ -93,7 +93,7 @@ public final class EventPublishingScanResultHandler implements JcrPropertyScanRe
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int index, int propertyType, @Nullable String userId) {
+    public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int index, final int propertyType, @Nullable final String userId) {
         if (checkPublish(scanResult)) {
             final Event event = new Event(resultEventTopic(propertyType), properties(path, index, userId, scanResult));
             eventAdmin.postEvent(event);

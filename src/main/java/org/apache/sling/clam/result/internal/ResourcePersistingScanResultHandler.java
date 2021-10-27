@@ -119,14 +119,14 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int propertyType, @Nullable String userId) {
+    public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId) {
         if (checkPersist(scanResult)) {
             persistResult(scanResult, path, null, propertyType, userId);
         }
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int index, int propertyType, @Nullable String userId) {
+    public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int index, final int propertyType, @Nullable final String userId) {
         if (checkPersist(scanResult)) {
             persistResult(scanResult, path, index, propertyType, userId);
         }
@@ -136,7 +136,7 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
         return !scanResult.isOk() || configuration.result_status_ok_persist();
     }
 
-    private void persistResult(@NotNull ScanResult scanResult, @NotNull String path, Integer index, int propertyType, @Nullable String userId) {
+    private void persistResult(@NotNull final ScanResult scanResult, @NotNull final String path, final Integer index, final int propertyType, @Nullable final String userId) {
         try (ResourceResolver resourceResolver = serviceResourceResolver()) {
             final Map<String, Object> properties = properties(path, index, userId, scanResult);
             properties.put(JCR_PRIMARYTYPE, NT_UNSTRUCTURED);

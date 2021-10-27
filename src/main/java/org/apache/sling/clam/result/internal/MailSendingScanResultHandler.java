@@ -101,7 +101,7 @@ public final class MailSendingScanResultHandler implements JcrPropertyScanResult
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int propertyType, @Nullable String userId) {
+    public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId) {
         if (checkPublish(scanResult)) {
             final Map<String, Object> properties = properties(path, userId, scanResult);
             try {
@@ -113,7 +113,7 @@ public final class MailSendingScanResultHandler implements JcrPropertyScanResult
     }
 
     @Override
-    public void handleJcrPropertyScanResult(@NotNull ScanResult scanResult, @NotNull String path, int index, int propertyType, @Nullable String userId) {
+    public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int index, final int propertyType, @Nullable final String userId) {
         if (checkPublish(scanResult)) {
             final Map<String, Object> properties = properties(path, index, userId, scanResult);
             try {

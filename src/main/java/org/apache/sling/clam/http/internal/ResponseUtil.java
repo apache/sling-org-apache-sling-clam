@@ -55,7 +55,7 @@ public final class ResponseUtil {
         }
     }
 
-    static String json(@NotNull ScanResult scanResult, @NotNull String path, @Nullable Integer index, int propertyType, @Nullable String userId) {
+    static String json(@NotNull final ScanResult scanResult, @NotNull final String path, @Nullable final Integer index, final int propertyType, @Nullable final String userId) {
         final JsonObjectBuilder event = Json.createObjectBuilder();
         event.add("timestamp", scanResult.getTimestamp());
         event.add("status", scanResult.getStatus().name());

@@ -165,7 +165,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
         return paths;
     }
 
-    private Set<String> concat(final Set<String> a, Set<String> b) {
+    private Set<String> concat(final Set<String> a, final Set<String> b) {
         final Set<String> set = new HashSet<>(a);
         set.addAll(b);
         return set;
