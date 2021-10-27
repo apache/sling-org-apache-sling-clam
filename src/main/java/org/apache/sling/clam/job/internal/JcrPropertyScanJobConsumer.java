@@ -121,13 +121,10 @@ public class JcrPropertyScanJobConsumer implements JobConsumer {
 
     private InputStream getInputStream(final Value value) throws Exception {
         final int propertyType = value.getType();
-        switch (propertyType) {
-            case PropertyType.BINARY:
-                return value.getBinary().getStream();
-            case PropertyType.STRING:
-                return IOUtils.toInputStream(value.getString(), StandardCharsets.UTF_8);
-            default:
-                throw new Exception("Unsupported property type: " + PropertyType.nameFromValue(propertyType));
+        if (propertyType == PropertyType.BINARY) {
+            return value.getBinary().getStream();
+        } else {
+            return IOUtils.toInputStream(value.getString(), StandardCharsets.UTF_8);
         }
     }
 
