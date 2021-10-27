@@ -124,7 +124,7 @@ public final class ClamEventsServlet extends HttpServlet implements JcrPropertyS
 
     }
 
-    private class Client implements AsyncListener, WriteListener {
+    private final class Client implements AsyncListener, WriteListener {
 
         private final AsyncContext context;
 

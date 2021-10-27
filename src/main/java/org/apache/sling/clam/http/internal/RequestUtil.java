@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static org.apache.sling.clam.internal.ClamUtil.propertyTypesFromNames;
 
-public class RequestUtil {
+public final class RequestUtil {
 
     private RequestUtil() {
     }

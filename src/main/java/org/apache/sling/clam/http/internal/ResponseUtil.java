@@ -33,7 +33,7 @@ import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ResponseUtil {
+public final class ResponseUtil {
 
     private ResponseUtil() {
     }
