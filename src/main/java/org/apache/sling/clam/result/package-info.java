@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+/**
+ * Provides the API for handling scan results.
+ */
 @Version("1.0.0")
 package org.apache.sling.clam.result;
 

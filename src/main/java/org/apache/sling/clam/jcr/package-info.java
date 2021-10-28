@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+/**
+ * Provides the API for digging JCR.
+ */
 @Version("1.0.1")
 package org.apache.sling.clam.jcr;
 
