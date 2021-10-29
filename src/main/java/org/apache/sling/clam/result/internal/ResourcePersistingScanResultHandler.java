@@ -70,6 +70,14 @@ import static org.apache.sling.clam.internal.ClamUtil.properties;
 @SuppressWarnings("java:S3077")
 public final class ResourcePersistingScanResultHandler implements JcrPropertyScanResultHandler {
 
+    private static final String NT_SLING_ORDERED_FOLDER = "sling:OrderedFolder";
+
+    private static final String SLING_RESOURCE_TYPE_PROPERTY = "sling:resourceType";
+
+    private static final String JCR_RESULT_RESOURCE_TYPE = "sling/clam/jcr/result";
+
+    private static final String SUBSERVICE = "result-writer";
+
     @Reference(
         policy = ReferencePolicy.DYNAMIC,
         policyOption = ReferencePolicyOption.GREEDY
@@ -86,14 +94,6 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     private ResourcePersistingScanResultHandlerConfiguration configuration;
 
     private final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
-
-    private static final String NT_SLING_ORDERED_FOLDER = "sling:OrderedFolder";
-
-    private static final String SLING_RESOURCE_TYPE_PROPERTY = "sling:resourceType";
-
-    private static final String JCR_RESULT_RESOURCE_TYPE = "sling/clam/jcr/result";
-
-    private static final String SUBSERVICE = "result-writer";
 
     private final Logger logger = LoggerFactory.getLogger(ResourcePersistingScanResultHandler.class);
 
