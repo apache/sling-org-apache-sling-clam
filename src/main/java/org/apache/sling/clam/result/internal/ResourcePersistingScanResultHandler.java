@@ -70,6 +70,8 @@ import static org.apache.sling.clam.internal.ClamUtil.properties;
 @SuppressWarnings("java:S3077")
 public final class ResourcePersistingScanResultHandler implements JcrPropertyScanResultHandler {
 
+    private static final SimpleDateFormat PATH_DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
+
     private static final String NT_SLING_ORDERED_FOLDER = "sling:OrderedFolder";
 
     private static final String SLING_RESOURCE_TYPE_PROPERTY = "sling:resourceType";
@@ -92,8 +94,6 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     private volatile ServiceUserMapped serviceUserMapped;
 
     private ResourcePersistingScanResultHandlerConfiguration configuration;
-
-    private final SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd/HH/mm/ss");
 
     private final Logger logger = LoggerFactory.getLogger(ResourcePersistingScanResultHandler.class);
 
@@ -157,7 +157,7 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     }
 
     private Resource getOrCreateParent(final ResourceResolver resourceResolver) throws PersistenceException {
-        final String path = String.format("%s/%s", configuration.result_root_path(), format.format(new Date()));
+        final String path = String.format("%s/%s", configuration.result_root_path(), PATH_DATE_FORMAT.format(new Date()));
         return ResourceUtil.getOrCreateResource(resourceResolver, path, NT_SLING_ORDERED_FOLDER, NT_SLING_ORDERED_FOLDER, true);
     }
 
