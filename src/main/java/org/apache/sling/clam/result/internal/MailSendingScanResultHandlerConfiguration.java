@@ -71,14 +71,14 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
         description = "Mail Text template (available variables: path, index, message, status, userId, started, size, timestamp)",
         required = false
     ) // newlines get lost in scr and metatype XML
-    String mail_text() default "status: [(${status})]\n" +
-        "message: [(${message})]\n" +
-        "path: [(${path})]\n" +
-        "[# th:if=\"${index}\"]index: [(${index})][/]\n" +
-        "size: [(${size})]\n" +
-        "[# th:if=\"${userId}\"]userId: [(${userId})][/]\n" +
-        "started: [(${#dates.formatISO(new java.util.Date(started))})]\n" +
-        "timestamp: [(${#dates.formatISO(new java.util.Date(timestamp))})]\n";
+    String mail_text() default "status: [(${status})]\n"
+        + "message: [(${message})]\n"
+        + "path: [(${path})]\n"
+        + "[# th:if=\"${index}\"]index: [(${index})][/]\n"
+        + "size: [(${size})]\n"
+        + "[# th:if=\"${userId}\"]userId: [(${userId})][/]\n"
+        + "started: [(${#dates.formatISO(new java.util.Date(started))})]\n"
+        + "timestamp: [(${#dates.formatISO(new java.util.Date(timestamp))})]\n";
 
     @AttributeDefinition(
         name = "Mail HTML",
