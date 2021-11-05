@@ -83,6 +83,9 @@ public final class ClamEventsServlet extends HttpServlet implements JcrPropertyS
 
     private final Logger logger = LoggerFactory.getLogger(ClamEventsServlet.class);
 
+    public ClamEventsServlet() { //
+    }
+
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding(StandardCharsets.UTF_8.name());
