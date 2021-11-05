@@ -33,6 +33,9 @@ import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Util for HTTP Responses.
+ */
 public final class ResponseUtil {
 
     private ResponseUtil() {

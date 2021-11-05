@@ -56,6 +56,9 @@ import static org.apache.jackrabbit.JcrConstants.JCR_MIXINTYPES;
 import static org.apache.jackrabbit.JcrConstants.JCR_PRIMARYTYPE;
 import static org.apache.sling.clam.internal.ClamUtil.properties;
 
+/**
+ * Service to persist scan results as <code>Resource</code>.
+ */
 @Component(
     configurationPolicy = ConfigurationPolicy.REQUIRE,
     property = {

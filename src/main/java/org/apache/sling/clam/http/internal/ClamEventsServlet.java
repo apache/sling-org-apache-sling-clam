@@ -52,6 +52,9 @@ import org.slf4j.LoggerFactory;
 
 import static org.apache.sling.clam.http.internal.ResponseUtil.json;
 
+/**
+ * Service to publish scan results as Server-Sent Events.
+ */
 @Component(
     service = {
         Servlet.class,

@@ -29,6 +29,9 @@ import org.apache.sling.commons.clam.ScanResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Util for JCR and event properties and scan results.
+ */
 public final class ClamUtil {
 
     public static final String PROPERTY_PATH = "path";

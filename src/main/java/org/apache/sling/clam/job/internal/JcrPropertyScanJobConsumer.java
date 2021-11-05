@@ -47,6 +47,9 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Service to consume jobs and scan data with Clam service.
+ */
 @Component(
     property = {
         JobExecutor.PROPERTY_TOPICS + "=org/apache/sling/clam/scan/jcr/property/*",

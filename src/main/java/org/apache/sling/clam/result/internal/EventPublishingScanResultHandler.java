@@ -40,6 +40,9 @@ import org.slf4j.LoggerFactory;
 import static org.apache.sling.clam.internal.ClamUtil.properties;
 import static org.apache.sling.clam.internal.ClamUtil.resultEventTopic;
 
+/**
+ * Service to publish scan results as OSGi Event.
+ */
 @Component(
     configurationPolicy = ConfigurationPolicy.REQUIRE,
     property = {

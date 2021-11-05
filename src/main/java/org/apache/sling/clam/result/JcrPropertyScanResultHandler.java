@@ -23,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
+/**
+ * Service to handle JCR property scan results.
+ */
 @ConsumerType
 public interface JcrPropertyScanResultHandler {
 

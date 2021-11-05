@@ -53,6 +53,9 @@ import static org.apache.sling.clam.internal.ClamUtil.checkLength;
 import static org.apache.sling.clam.internal.ClamUtil.properties;
 import static org.apache.sling.clam.internal.ClamUtil.scanJobTopic;
 
+/**
+ * Service to observe JCR nodes for matching properties.
+ */
 @Component(
     service = Observer.class,
     immediate = true,

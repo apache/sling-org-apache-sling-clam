@@ -26,6 +26,9 @@ import javax.jcr.Node;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * Service to dig JCR for matching properties.
+ */
 @ProviderType
 public interface NodeDescendingJcrPropertyDigger {
 

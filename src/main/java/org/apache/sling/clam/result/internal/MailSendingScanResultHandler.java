@@ -53,6 +53,9 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 import static org.apache.sling.clam.internal.ClamUtil.properties;
 
+/**
+ * Service to send scan results as mail.
+ */
 @Component(
     configurationPolicy = ConfigurationPolicy.REQUIRE,
     property = {

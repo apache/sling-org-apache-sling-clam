@@ -56,6 +56,9 @@ import static org.apache.sling.clam.http.internal.RequestUtil.propertyTypes;
 import static org.apache.sling.clam.http.internal.ResponseUtil.handleError;
 import static org.apache.sling.clam.internal.ClamUtil.propertyTypesFromNames;
 
+/**
+ * Service to provide an HTTP API to trigger JCR scans.
+ */
 @Component(
     service = Servlet.class,
     property = {
