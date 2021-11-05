@@ -92,7 +92,7 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     @Reference(
         policy = ReferencePolicy.DYNAMIC,
         policyOption = ReferencePolicyOption.GREEDY,
-        target = ("(" + ServiceUserMapped.SUBSERVICENAME + "=" + SUBSERVICE + ")")
+        target = "(" + ServiceUserMapped.SUBSERVICENAME + "=" + SUBSERVICE + ")"
     )
     private volatile ServiceUserMapped serviceUserMapped;
 
