@@ -33,6 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface NodeDescendingJcrPropertyDigger {
 
     /**
+     * Digs JCR for matching properties.
+     *
      * @param node          The entry node for digging
      * @param pattern       The pattern a property path has to match
      * @param propertyTypes The property types to take into account

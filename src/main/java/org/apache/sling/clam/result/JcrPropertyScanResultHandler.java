@@ -30,6 +30,8 @@ import org.osgi.annotation.versioning.ConsumerType;
 public interface JcrPropertyScanResultHandler {
 
     /**
+     * Handles scan results of single-value properties.
+     *
      * @param scanResult   The scan result from Clam service
      * @param path         The path of the scanned single-value property
      * @param propertyType The type of the scanned property
@@ -38,6 +40,8 @@ public interface JcrPropertyScanResultHandler {
     public abstract void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId);
 
     /**
+     * Handles scan results of multi-value properties.
+     *
      * @param scanResult   The scan result from Clam service
      * @param path         The path of the scanned multi-value property
      * @param index        The index of the scanned property value
