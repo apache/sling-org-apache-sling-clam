@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicLong;
 
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
@@ -76,8 +75,6 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
 public final class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
 
     private final List<Client> clients = Collections.synchronizedList(new ArrayList<>());
-
-    private final AtomicLong counter = new AtomicLong(0);
 
     private static final String JCR_RESULT_EVENT_TYPE = "sling/clam/jcr/result";
 
@@ -190,8 +187,7 @@ public final class ClamEventsServlet extends HttpServlet implements JcrPropertyS
         }
 
         private void addEvent(final Event event) {
-            final long count = counter.incrementAndGet();
-            logger.debug("adding event: {}", count);
+            logger.debug("adding event: {}", event);
             events.add(event);
             try {
                 onWritePossible();
