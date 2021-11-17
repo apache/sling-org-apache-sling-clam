@@ -74,9 +74,9 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
 @SuppressWarnings("java:S1948")
 public final class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
 
-    private final List<Client> clients = Collections.synchronizedList(new ArrayList<>());
-
     private static final String JCR_RESULT_EVENT_TYPE = "sling/clam/jcr/result";
+
+    private final List<Client> clients = Collections.synchronizedList(new ArrayList<>());
 
     private final Logger logger = LoggerFactory.getLogger(ClamEventsServlet.class);
 
