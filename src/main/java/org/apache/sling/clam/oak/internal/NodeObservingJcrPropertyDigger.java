@@ -90,6 +90,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
         policy = ReferencePolicy.DYNAMIC,
         policyOption = ReferencePolicyOption.GREEDY
     )
+    @SuppressWarnings("unused")
     private volatile ServiceUserMapped serviceUserMapped;
 
     private Pattern pattern;

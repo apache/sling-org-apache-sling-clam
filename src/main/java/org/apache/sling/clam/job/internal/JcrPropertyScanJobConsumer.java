@@ -83,6 +83,7 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
         policy = ReferencePolicy.DYNAMIC,
         policyOption = ReferencePolicyOption.GREEDY
     )
+    @SuppressWarnings("unused")
     private volatile ServiceUserMapped serviceUserMapped;
 
     private final Logger logger = LoggerFactory.getLogger(JcrPropertyScanJobConsumer.class);

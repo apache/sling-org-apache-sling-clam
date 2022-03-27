@@ -94,6 +94,7 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
         policyOption = ReferencePolicyOption.GREEDY,
         target = "(" + ServiceUserMapped.SUBSERVICENAME + "=" + SUBSERVICE + ")"
     )
+    @SuppressWarnings("unused")
     private volatile ServiceUserMapped serviceUserMapped;
 
     private ResourcePersistingScanResultHandlerConfiguration configuration;
