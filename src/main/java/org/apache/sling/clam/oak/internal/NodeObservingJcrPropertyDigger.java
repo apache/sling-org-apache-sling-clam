@@ -198,7 +198,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
         }
 
         @Override
-        @SuppressWarnings("checkstyle:IllegalCatch")
+        @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:NestedIfDepth"})
         public void run() {
             final Set<String> paths = filter(path, names, pattern);
             try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
