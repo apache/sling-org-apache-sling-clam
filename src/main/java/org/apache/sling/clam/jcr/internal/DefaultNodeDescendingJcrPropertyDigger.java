@@ -66,6 +66,7 @@ public final class DefaultNodeDescendingJcrPropertyDigger implements NodeDescend
     }
 
     public void dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception {
+        @SuppressWarnings("checkstyle:AvoidInlineConditionals")
         final int absoluteMaxDepth = maxDepth < 0 ? -1 : node.getDepth() + maxDepth;
         _dig(node, pattern, propertyTypes, maxLength, absoluteMaxDepth);
     }
