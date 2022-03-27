@@ -133,7 +133,7 @@ public final class MailSendingScanResultHandler implements JcrPropertyScanResult
         return !scanResult.isOk() || configuration.result_status_ok_send();
     }
 
-    @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:ExecutableStatementCount"})
+    @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:ExecutableStatementCount", "checkstyle:NPathComplexity"})
     private void sendMail(final Map<String, Object> properties) throws Exception {
         final MailService mailService = this.mailService;
         final MessageBuilder builder = mailService.getMessageBuilder();
