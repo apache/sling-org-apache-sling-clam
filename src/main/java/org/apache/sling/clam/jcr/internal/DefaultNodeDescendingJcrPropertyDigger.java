@@ -25,6 +25,7 @@ import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.Property;
 import javax.jcr.PropertyIterator;
+import javax.jcr.RepositoryException;
 
 import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
 import org.apache.sling.event.jobs.JobManager;
@@ -65,14 +66,21 @@ public final class DefaultNodeDescendingJcrPropertyDigger implements NodeDescend
     public DefaultNodeDescendingJcrPropertyDigger() { //
     }
 
+    private int calculateAbsoluteMaxDepth(@NotNull final Node node, final int maxDepth) throws RepositoryException {
+        if (maxDepth < 0) {
+            return -1;
+        } else {
+            return node.getDepth() + maxDepth;
+        }
+    }
+
     public void dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception {
-        @SuppressWarnings("checkstyle:AvoidInlineConditionals")
-        final int absoluteMaxDepth = maxDepth < 0 ? -1 : node.getDepth() + maxDepth;
-        _dig(node, pattern, propertyTypes, maxLength, absoluteMaxDepth);
+        final int absoluteMaxDepth = calculateAbsoluteMaxDepth(node, maxDepth);
+        digWithAbsoluteMaxDepth(node, pattern, propertyTypes, maxLength, absoluteMaxDepth);
     }
 
     @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NestedIfDepth"})
-    private void _dig(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int maxDepth) throws Exception {
+    private void digWithAbsoluteMaxDepth(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int absoluteMaxDepth) throws Exception {
         final PropertyIterator properties = node.getProperties();
         while (properties.hasNext()) {
             final Property property = properties.nextProperty();
@@ -98,10 +106,10 @@ public final class DefaultNodeDescendingJcrPropertyDigger implements NodeDescend
                 }
             }
         }
-        if (maxDepth == -1 || node.getDepth() < maxDepth) {
+        if (absoluteMaxDepth == -1 || node.getDepth() < absoluteMaxDepth) {
             final NodeIterator nodes = node.getNodes();
             while (nodes.hasNext()) {
-                _dig(nodes.nextNode(), pattern, propertyTypes, maxLength, maxDepth);
+                digWithAbsoluteMaxDepth(nodes.nextNode(), pattern, propertyTypes, maxLength, absoluteMaxDepth);
             }
         }
     }
