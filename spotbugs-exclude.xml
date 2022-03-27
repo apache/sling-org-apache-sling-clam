@@ -33,4 +33,10 @@
     <Class name="org.apache.sling.clam.oak.internal.NodeObservingJcrPropertyDigger$DigTask"/>
     <Method name="run"/>
   </Match>
+  <Match>
+    <!-- https://github.com/spotbugs/spotbugs/issues/868 -->
+    <Bug pattern="RCN_REDUNDANT_NULLCHECK_WOULD_HAVE_BEEN_A_NPE"/>
+    <Class name="org.apache.sling.clam.http.internal.ResponseUtil"/>
+    <Method name="handleError"/>
+  </Match>
 </FindBugsFilter>
