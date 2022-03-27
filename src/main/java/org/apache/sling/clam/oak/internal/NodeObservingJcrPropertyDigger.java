@@ -107,6 +107,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
     }
 
     @Activate
+    @SuppressWarnings("unused")
     private void activate(final NodeObservingJcrPropertyDiggerConfiguration configuration) {
         logger.debug("activating");
         this.configuration = configuration;
@@ -115,6 +116,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
     }
 
     @Modified
+    @SuppressWarnings("unused")
     private void modified(final NodeObservingJcrPropertyDiggerConfiguration configuration) {
         logger.debug("modifying");
         this.configuration = configuration;
@@ -122,6 +124,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
     }
 
     @Deactivate
+    @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
         threadPoolManager.release(threadPool);

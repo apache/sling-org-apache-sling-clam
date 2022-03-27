@@ -104,18 +104,21 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
     }
 
     @Activate
+    @SuppressWarnings("unused")
     private void activate(final ResourcePersistingScanResultHandlerConfiguration configuration) {
         logger.debug("activating");
         this.configuration = configuration;
     }
 
     @Modified
+    @SuppressWarnings("unused")
     private void modified(final ResourcePersistingScanResultHandlerConfiguration configuration) {
         logger.debug("modifying");
         this.configuration = configuration;
     }
 
     @Deactivate
+    @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
         this.configuration = null;

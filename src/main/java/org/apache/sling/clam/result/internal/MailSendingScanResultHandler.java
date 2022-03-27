@@ -86,18 +86,21 @@ public final class MailSendingScanResultHandler implements JcrPropertyScanResult
     }
 
     @Activate
+    @SuppressWarnings("unused")
     private void activate(final MailSendingScanResultHandlerConfiguration configuration) {
         logger.debug("activating");
         this.configuration = configuration;
     }
 
     @Modified
+    @SuppressWarnings("unused")
     private void modified(final MailSendingScanResultHandlerConfiguration configuration) {
         logger.debug("modifying");
         this.configuration = configuration;
     }
 
     @Deactivate
+    @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
         this.configuration = null;

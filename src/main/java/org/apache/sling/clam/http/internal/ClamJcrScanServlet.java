@@ -90,6 +90,7 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
     }
 
     @Activate
+    @SuppressWarnings("unused")
     private void activate(final ClamJcrScanServletConfiguration configuration) throws Exception {
         logger.debug("activating");
         this.configuration = configuration;
@@ -97,6 +98,7 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
     }
 
     @Modified
+    @SuppressWarnings("unused")
     private void modified(final ClamJcrScanServletConfiguration configuration) throws Exception {
         logger.debug("modifying");
         this.configuration = configuration;
@@ -104,6 +106,7 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
     }
 
     @Deactivate
+    @SuppressWarnings("unused")
     private void deactivate() {
         logger.debug("deactivating");
         configuration = null;
