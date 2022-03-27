@@ -23,4 +23,9 @@
     <Class name="org.apache.sling.clam.http.internal.ClamEventsServlet"/>
     <Field name="clients"/>
   </Match>
+  <Match>
+    <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
+    <Class name="org.apache.sling.clam.http.internal.ClamEventsServlet$Client"/>
+    <Method name="onWritePossible"/>
+  </Match>
 </FindBugsFilter>
