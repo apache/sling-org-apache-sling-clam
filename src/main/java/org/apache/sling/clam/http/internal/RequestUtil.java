@@ -103,6 +103,7 @@ public final class RequestUtil {
         }
     }
 
+    @SuppressWarnings("checkstyle:ReturnCount")
     static boolean isAuthorized(@NotNull final SlingHttpServletRequest request, @NotNull final Collection<String> authorizedGroups) throws Exception {
         final Authorizable authorizable = request.getResourceResolver().adaptTo(Authorizable.class);
         if (authorizable == null) {
