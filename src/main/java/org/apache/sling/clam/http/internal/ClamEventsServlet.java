@@ -194,6 +194,7 @@ public final class ClamEventsServlet extends HttpServlet implements JcrPropertyS
             }
         }
 
+        @SuppressWarnings("checkstyle:IllegalCatch")
         private void addEvent(final Event event) {
             logger.debug("adding event: {}", event);
             events.add(event);

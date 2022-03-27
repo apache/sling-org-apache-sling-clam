@@ -104,6 +104,7 @@ public final class MailSendingScanResultHandler implements JcrPropertyScanResult
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int propertyType, @Nullable final String userId) {
         if (checkPublish(scanResult)) {
             final Map<String, Object> properties = properties(path, userId, scanResult);
@@ -116,6 +117,7 @@ public final class MailSendingScanResultHandler implements JcrPropertyScanResult
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     public void handleJcrPropertyScanResult(@NotNull final ScanResult scanResult, @NotNull final String path, final int index, final int propertyType, @Nullable final String userId) {
         if (checkPublish(scanResult)) {
             final Map<String, Object> properties = properties(path, index, userId, scanResult);

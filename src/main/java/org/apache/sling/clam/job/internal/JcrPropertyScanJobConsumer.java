@@ -91,6 +91,7 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     public JobResult process(final Job job) {
         try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
             final String path = job.getProperty(ClamUtil.PROPERTY_PATH, String.class);
@@ -131,6 +132,7 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
         }
     }
 
+    @SuppressWarnings("checkstyle:IllegalCatch")
     private void invokeScanResultHandlers(final ScanResult scanResult, final String path, final Integer index, final int propertyType, final String userId) {
         if (scanResultHandlers != null) {
             for (final JcrPropertyScanResultHandler scanResultHandler : scanResultHandlers) {

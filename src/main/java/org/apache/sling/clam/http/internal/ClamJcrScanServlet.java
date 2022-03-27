@@ -117,6 +117,7 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
     }
 
     @Override
+    @SuppressWarnings("checkstyle:IllegalCatch")
     protected void doPost(@NotNull final SlingHttpServletRequest request, @NotNull final SlingHttpServletResponse response) throws ServletException, IOException {
         final List<String> groups = Arrays.asList(configuration.scan_authorized_groups());
         if (!groups.isEmpty()) {
