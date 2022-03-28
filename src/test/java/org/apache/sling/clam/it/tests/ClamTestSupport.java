@@ -33,6 +33,7 @@ import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
 import org.apache.sling.commons.clam.ClamService;
 import org.apache.sling.event.jobs.JobManager;
 import org.apache.sling.jcr.api.SlingRepository;
+import org.apache.sling.testing.paxexam.SlingOptions;
 import org.apache.sling.testing.paxexam.TestSupport;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.options.ModifiableCompositeOption;
@@ -74,6 +75,7 @@ public abstract class ClamTestSupport extends TestSupport {
     static final String ADMIN_PASSWORD = "admin";
 
     protected ModifiableCompositeOption baseConfiguration() {
+        SlingOptions.versionResolver.setVersionFromProject(SLING_GROUP_ID, "org.apache.sling.commons.threads");
         return composite(
             // Truth first to prevent version issues with Guava
             wrappedBundle(mavenBundle().groupId("com.google.truth").artifactId("truth").versionAsInProject()),
