@@ -22,7 +22,8 @@ import java.security.Security;
 import java.util.Objects;
 
 import javax.inject.Inject;
-import javax.mail.internet.MimeMessage;
+
+import jakarta.mail.internet.MimeMessage;
 
 import com.icegreen.greenmail.util.DummySSLSocketFactory;
 import com.icegreen.greenmail.util.GreenMail;
@@ -49,7 +50,6 @@ import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsMessagin
 import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresence;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
 import static org.apache.sling.testing.paxexam.SlingOptions.thymeleaf;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
@@ -96,6 +96,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
                 .put("host", "localhost")
                 .asOption(),
             factoryConfiguration("org.apache.sling.commons.messaging.mail.internal.SimpleMailService")
+                .put("mail.smtps.ssl.checkserveridentity", false)
                 .put("mail.smtps.from", "envelope-from@example.org")
                 .put("mail.smtps.host", "localhost")
                 .put("mail.smtps.port", port)
@@ -104,7 +105,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
                 .asOption(),
             slingCommonsMessagingMail(),
             // Commons Crypto
-            factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptStandardPBEStringCryptoService")
+            factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptStandardPbeStringCryptoService")
                 .put("algorithm", "PBEWITHHMACSHA512ANDAES_256")
                 .asOption(),
             factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptRandomIvGeneratorRegistrar")
@@ -116,8 +117,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
             // Thymeleaf
             thymeleaf(),
             // testing – mail
-            greenmail(),
-            mavenBundle().groupId("org.apache.commons").artifactId("commons-email").versionAsInProject()
+            greenmail()
         );
     }
 

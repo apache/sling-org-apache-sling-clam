@@ -1,14 +1,8 @@
-DynamicImport-Package:\
-  javax.mail.*,\
-  org.apache.commons.lang3.*,\
-  org.apache.sling.commons.messaging.*,\
-  org.thymeleaf.*
-
 Import-Package:\
-  javax.mail.*;resolution:=optional,\
-  org.apache.commons.lang3.*;resolution:=optional,\
-  org.apache.sling.commons.messaging.*;resolution:=optional,\
-  org.thymeleaf.*;resolution:=optional,\
+  jakarta.mail.*;resolution:=dynamic,\
+  org.apache.commons.lang3.*;resolution:=dynamic,\
+  org.apache.sling.commons.messaging.*;resolution:=dynamic,\
+  org.thymeleaf.*;resolution:=dynamic,\
   *
 
 -removeheaders:\
