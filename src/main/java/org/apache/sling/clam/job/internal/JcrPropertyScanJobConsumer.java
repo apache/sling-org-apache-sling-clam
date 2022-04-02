@@ -39,7 +39,10 @@ import org.apache.sling.event.jobs.consumer.JobConsumer;
 import org.apache.sling.event.jobs.consumer.JobExecutor;
 import org.apache.sling.serviceusermapping.ServiceUserMapped;
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -91,9 +94,28 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
     public JcrPropertyScanJobConsumer() { //
     }
 
+    @Activate
+    @SuppressWarnings("unused")
+    private void activate() {
+        logger.debug("activating");
+    }
+
+    @Modified
+    @SuppressWarnings("unused")
+    private void modified() {
+        logger.debug("modifying");
+    }
+
+    @Deactivate
+    @SuppressWarnings("unused")
+    private void deactivate() {
+        logger.debug("deactivating");
+    }
+
     @Override
     @SuppressWarnings("checkstyle:IllegalCatch")
     public JobResult process(final Job job) {
+        logger.debug("processing property scan job: {}", job);
         try (ResourceResolver resourceResolver = resourceResolverFactory.getServiceResourceResolver(null)) {
             final String path = job.getProperty(ClamUtil.PROPERTY_PATH, String.class);
             final String userId = job.getProperty(ClamUtil.USER_ID, String.class);
@@ -139,8 +161,10 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
             for (final JcrPropertyScanResultHandler scanResultHandler : scanResultHandlers) {
                 try {
                     if (index == null) { // single-value property
+                        logger.debug("invoking scan result handler {} for single-value property: {}, {}, {}", scanResultHandler, path, propertyType, userId);
                         scanResultHandler.handleJcrPropertyScanResult(scanResult, path, propertyType, userId);
                     } else { // multi-value property
+                        logger.debug("invoking scan result handler {} for multi-value property: {}, {}, {}, {}", scanResultHandler, path, index, propertyType, userId);
                         scanResultHandler.handleJcrPropertyScanResult(scanResult, path, index, propertyType, userId);
                     }
                 } catch (Exception e) {
