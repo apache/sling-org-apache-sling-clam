@@ -59,7 +59,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 public class MailSendingScanResultHandlerIT extends ClamTestSupport {
 
     @Inject
-    @Filter("(service.pid=org.apache.sling.clam.result.internal.MailSendingScanResultHandler)")
+    @Filter(value = "(service.pid=org.apache.sling.clam.result.internal.MailSendingScanResultHandler)", timeout = 300000)
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
