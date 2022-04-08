@@ -21,6 +21,7 @@ package org.apache.sling.clam.it.tests;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.sling.clam.it.support.RecordingJcrPropertyScanResultHandler;
 import org.apache.sling.clam.result.JcrPropertyScanResultHandler;
@@ -73,7 +74,33 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
             .when()
             .post(url)
             .then()
-            .statusCode(401);
+            .statusCode(HttpServletResponse.SC_UNAUTHORIZED);
+    }
+
+    @Test
+    public void testNonAuthorized() throws Exception {
+        final String url = String.format(URL_TEMPLATE, httpPort());
+        given()
+            .auth()
+            .basic(ADMIN_USERNAME, ADMIN_PASSWORD)
+            .param("path", "/content/starter")
+            .when()
+            .post(url)
+            .then()
+            .statusCode(HttpServletResponse.SC_FORBIDDEN);
+    }
+
+    @Test
+    public void testAuthorized() throws Exception {
+        final String url = String.format(URL_TEMPLATE, httpPort());
+        given()
+            .auth()
+            .basic(USER_USERNAME, USER_PASSWORD)
+            .param("path", "/content/starter")
+            .when()
+            .post(url)
+            .then()
+            .statusCode(HttpServletResponse.SC_OK);
     }
 
     @Test
@@ -84,12 +111,12 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
         final String url = String.format(URL_TEMPLATE, httpPort());
         given()
             .auth()
-            .basic(ADMIN_USERNAME, ADMIN_PASSWORD)
+            .basic(USER_USERNAME, USER_PASSWORD)
             .param("path", "/content/starter")
             .when()
             .post(url)
             .then()
-            .statusCode(200);
+            .statusCode(HttpServletResponse.SC_OK);
 
         with()
             .pollInterval(10, SECONDS)

@@ -45,7 +45,7 @@ import org.osgi.service.metatype.annotations.Option;
         name = "scan authorized groups",
         description = "User groups authorized for scanning"
     )
-    String[] scan_authorized_groups() default {};
+    String[] scan_authorized_groups() default {"sling-clam-scan"};
 
     @AttributeDefinition(
         name = "default property types",

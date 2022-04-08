@@ -74,6 +74,10 @@ public abstract class ClamTestSupport extends TestSupport {
 
     static final String ADMIN_PASSWORD = "admin";
 
+    static final String USER_USERNAME = "bob";
+
+    static final String USER_PASSWORD = "foo";
+
     protected ModifiableCompositeOption baseConfiguration() {
         SlingOptions.versionResolver.setVersionFromProject(SLING_GROUP_ID, "org.apache.sling.commons.threads");
         return composite(
@@ -88,6 +92,9 @@ public abstract class ClamTestSupport extends TestSupport {
             testBundle("bundle.filename"),
             factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
                 .put("scripts", new String[]{"create service user sling-clam\ncreate path (sling:Folder) /var/clam/results\nset ACL for sling-clam\nallow jcr:all on /var/clam\nend"})
+                .asOption(),
+            factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
+                .put("scripts", new String[]{"create user bob with password foo\ncreate group sling-clam-scan\nadd bob to group sling-clam-scan"})
                 .asOption(),
             factoryConfiguration("org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended")
                 .put("user.mapping", new String[]{"org.apache.sling.clam=sling-clam", "org.apache.sling.clam:result-writer=sling-clam"})

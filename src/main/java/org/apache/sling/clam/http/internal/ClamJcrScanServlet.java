@@ -123,17 +123,15 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
     @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ReturnCount", "checkstyle:ExecutableStatementCount"})
     protected void doPost(@NotNull final SlingHttpServletRequest request, @NotNull final SlingHttpServletResponse response) throws ServletException, IOException {
         final List<String> groups = Arrays.asList(configuration.scan_authorized_groups());
-        if (!groups.isEmpty()) {
-            boolean isAuthorized = false;
-            try {
-                isAuthorized = isAuthorized(request, groups);
-            } catch (Exception e) {
-                logger.error(e.getMessage(), e);
-            }
-            if (!isAuthorized) {
-                handleError(response, HttpServletResponse.SC_FORBIDDEN, null);
-                return;
-            }
+        boolean isAuthorized = false;
+        try {
+            isAuthorized = isAuthorized(request, groups);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        if (!isAuthorized) {
+            handleError(response, HttpServletResponse.SC_FORBIDDEN, null);
+            return;
         }
 
         final String path;
