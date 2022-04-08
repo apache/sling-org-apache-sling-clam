@@ -145,6 +145,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Override
     protected void deleted(@NotNull final String path, @NotNull final Set<String> added, @NotNull final Set<String> deleted, @NotNull final Set<String> changed, @NotNull final Map<String, String> properties, @NotNull final CommitInfo commitInfo) {
+        // ignoring, deleted data is not relevant
     }
 
     @Override
