@@ -79,7 +79,7 @@ public final class DefaultNodeDescendingJcrPropertyDigger implements NodeDescend
         digWithAbsoluteMaxDepth(node, pattern, propertyTypes, maxLength, absoluteMaxDepth);
     }
 
-    @SuppressWarnings({"checkstyle:CyclomaticComplexity", "checkstyle:NestedIfDepth"})
+    @SuppressWarnings({"java:S3776", "checkstyle:CyclomaticComplexity", "checkstyle:NestedIfDepth"})
     private void digWithAbsoluteMaxDepth(@NotNull final Node node, @NotNull final Pattern pattern, @NotNull final Set<Integer> propertyTypes, final long maxLength, final int absoluteMaxDepth) throws Exception {
         logger.debug("digging node: {}", node.getPath());
         final PropertyIterator properties = node.getProperties();
