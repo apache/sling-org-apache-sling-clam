@@ -48,9 +48,9 @@ public final class RequestUtil {
         }
     }
 
-    @SuppressWarnings("checkstyle:IllegalCatch")
+    @SuppressWarnings({"javasecurity:S2631", "checkstyle:IllegalCatch"})
     static Pattern pattern(@NotNull final SlingHttpServletRequest request, @NotNull final Pattern defaultPattern) throws Exception {
-        final String value = request.getParameter("pattern");
+        final String value = request.getParameter("pattern"); // ensure pattern input is from trusted source, e.g. authenticated and authorized users (ClamJcrScanServlet)
         if (value == null) {
             return defaultPattern;
         } else {
