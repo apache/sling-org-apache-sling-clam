@@ -52,7 +52,8 @@ import org.osgi.service.metatype.annotations.Option;
         description = "Type of properties",
         options = {
             @Option(label = "Binary", value = "Binary"),
-            @Option(label = "String", value = "String")
+            @Option(label = "String", value = "String"),
+            @Option(label = "URI", value = "URI")
         }
     )
     String[] digger_default_property_types() default {"Binary"};
