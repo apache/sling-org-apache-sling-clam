@@ -59,7 +59,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 public class MailSendingScanResultHandlerIT extends ClamTestSupport {
 
     @Inject
-    @Filter(value = "(service.pid=org.apache.sling.clam.result.internal.MailSendingScanResultHandler)", timeout = 300000)
+    @Filter("(service.pid=org.apache.sling.clam.result.internal.MailSendingScanResultHandler)")
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
@@ -85,8 +85,6 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
             newConfiguration("org.apache.sling.clam.result.internal.MailSendingScanResultHandler")
                 .put("mail.from", "from@example.org")
                 .put("mail.to", "to@example.org")
-                .put("mail.cc", "cc@example.org")
-                .put("mail.bcc", "bcc@example.org")
                 .put("mail.replyTo", "reply-to@example.org")
                 .put("result.status.ok.send", true)
                 .asOption(),
@@ -152,9 +150,9 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
     @Test
     public void testSentResults() throws Exception {
         digBinaries(nodeDescendingJcrPropertyDigger, "/content/starter");
-        greenMail.waitForIncomingEmail(360000, 24);
+        greenMail.waitForIncomingEmail(60000, 8);
         final MimeMessage[] messages = greenMail.getReceivedMessages();
-        assertThat(messages.length).isEqualTo(24);
+        assertThat(messages.length).isEqualTo(8);
         for (final MimeMessage message : messages) {
             assertThat(message.getSubject()).startsWith("Clam scan result: OK for /content/starter/");
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
