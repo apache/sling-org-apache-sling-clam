@@ -51,6 +51,7 @@ import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresenc
 import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
 import static org.apache.sling.testing.paxexam.SlingOptions.thymeleaf;
 import static org.ops4j.pax.exam.CoreOptions.options;
+import static org.ops4j.pax.exam.CoreOptions.systemProperty;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 
@@ -59,7 +60,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 public class MailSendingScanResultHandlerIT extends ClamTestSupport {
 
     @Inject
-    @Filter(value = "(service.pid=org.apache.sling.clam.result.internal.MailSendingScanResultHandler)", timeout = 300000)
+    @Filter("(service.pid=org.apache.sling.clam.result.internal.MailSendingScanResultHandler)")
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
@@ -103,6 +104,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
                 .asOption(),
             slingCommonsMessagingMail(),
             // Commons Crypto
+            systemProperty("java.security.egd").value("file:/dev/urandom"),
             factoryConfiguration("org.apache.sling.commons.crypto.jasypt.internal.JasyptStandardPbeStringCryptoService")
                 .put("algorithm", "PBEWITHHMACSHA512ANDAES_256")
                 .asOption(),
