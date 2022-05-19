@@ -92,6 +92,7 @@ public final class ClamUtil {
         return length <= maxLength;
     }
 
+    @SuppressWarnings("java:S112")
     public static Set<Integer> propertyTypesFromNames(@NotNull final String[] names) throws Exception {
         final Set<Integer> propertyTypes = new HashSet<>();
         for (final String name : names) {

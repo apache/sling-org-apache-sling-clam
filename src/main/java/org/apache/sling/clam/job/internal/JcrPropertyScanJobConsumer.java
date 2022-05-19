@@ -146,6 +146,7 @@ public final class JcrPropertyScanJobConsumer implements JobConsumer {
         }
     }
 
+    @SuppressWarnings("java:S112")
     private InputStream getInputStream(final Value value) throws Exception {
         final int propertyType = value.getType();
         if (propertyType == PropertyType.BINARY) {

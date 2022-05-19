@@ -39,6 +39,7 @@ public final class RequestUtil {
     private RequestUtil() {
     }
 
+    @SuppressWarnings("java:S112")
     static String path(@NotNull final SlingHttpServletRequest request) throws Exception {
         final String value = request.getParameter("path");
         if (value == null) {
@@ -48,7 +49,7 @@ public final class RequestUtil {
         }
     }
 
-    @SuppressWarnings({"javasecurity:S2631", "checkstyle:IllegalCatch"})
+    @SuppressWarnings({"java:S112", "javasecurity:S2631", "checkstyle:IllegalCatch"})
     static Pattern pattern(@NotNull final SlingHttpServletRequest request, @NotNull final Pattern defaultPattern) throws Exception {
         final String value = request.getParameter("pattern"); // ensure pattern input is from trusted source, e.g. authenticated and authorized users (ClamJcrScanServlet)
         if (value == null) {
@@ -62,7 +63,7 @@ public final class RequestUtil {
         }
     }
 
-    @SuppressWarnings("checkstyle:IllegalCatch")
+    @SuppressWarnings({"java:S112", "checkstyle:IllegalCatch"})
     static Set<Integer> propertyTypes(@NotNull final SlingHttpServletRequest request, @NotNull final Set<Integer> defaultPropertyTypes) throws Exception {
         final String[] values = request.getParameterValues("propertyTypes");
         if (values == null || values.length == 0) {
@@ -75,7 +76,7 @@ public final class RequestUtil {
         }
     }
 
-    @SuppressWarnings("checkstyle:IllegalCatch")
+    @SuppressWarnings({"java:S112", "checkstyle:IllegalCatch"})
     static long maxLength(@NotNull final SlingHttpServletRequest request, final long defaultMaxLength) throws Exception {
         final String value = request.getParameter("maxLength");
         if (value == null) {
@@ -89,7 +90,7 @@ public final class RequestUtil {
         }
     }
 
-    @SuppressWarnings("checkstyle:IllegalCatch")
+    @SuppressWarnings({"java:S112", "checkstyle:IllegalCatch"})
     static int maxDepth(@NotNull final SlingHttpServletRequest request, final int defaultMaxDepth) throws Exception {
         final String value = request.getParameter("maxDepth");
         if (value == null) {
@@ -103,7 +104,7 @@ public final class RequestUtil {
         }
     }
 
-    @SuppressWarnings("checkstyle:ReturnCount")
+    @SuppressWarnings({"java:S112", "checkstyle:ReturnCount"})
     static boolean isAuthorized(@NotNull final SlingHttpServletRequest request, @NotNull final Collection<String> authorizedGroups) throws Exception {
         final Authorizable authorizable = request.getResourceResolver().adaptTo(Authorizable.class);
         if (authorizable == null) {

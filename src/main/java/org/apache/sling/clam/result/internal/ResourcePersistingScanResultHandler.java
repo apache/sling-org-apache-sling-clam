@@ -143,6 +143,7 @@ public final class ResourcePersistingScanResultHandler implements JcrPropertySca
         return !scanResult.isOk() || configuration.result_status_ok_persist();
     }
 
+    @SuppressWarnings("java:S112")
     private void persistResult(@NotNull final ScanResult scanResult, @NotNull final String path, final Integer index, final int propertyType, @Nullable final String userId) {
         try (ResourceResolver resourceResolver = serviceResourceResolver()) {
             final Map<String, Object> properties = properties(path, index, userId, scanResult);
