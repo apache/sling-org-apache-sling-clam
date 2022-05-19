@@ -174,6 +174,7 @@ public final class ClamEventsServlet extends HttpServlet implements JcrPropertyS
             final ServletOutputStream outputStream = context.getResponse().getOutputStream();
             while (outputStream.isReady() && events.peek() != null) {
                 final Event event = events.poll();
+                @SuppressWarnings("java:S3457")
                 final String data = String.format("event: %s\ndata: %s\n\n", event.getType(), event.getData());
                 outputStream.write(data.getBytes(StandardCharsets.UTF_8));
                 flushIfReady(outputStream);
