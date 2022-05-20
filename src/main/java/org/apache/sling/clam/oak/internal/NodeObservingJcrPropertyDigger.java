@@ -164,10 +164,14 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
         for (final String name : names) {
             final String p = String.format("%s/%s", path, name);
             if (pattern.matcher(p).matches()) {
-                logger.debug("path '{}' matches pattern '{}'", p, pattern.pattern());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("path '{}' matches pattern '{}'", p, pattern.pattern());
+                }
                 paths.add(p);
             } else {
-                logger.debug("path '{}' doesn't match pattern '{}'", p, pattern.pattern());
+                if (logger.isDebugEnabled()) {
+                    logger.debug("path '{}' doesn't match pattern '{}'", p, pattern.pattern());
+                }
             }
         }
         return paths;
