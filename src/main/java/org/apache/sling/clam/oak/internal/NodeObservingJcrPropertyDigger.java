@@ -139,8 +139,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Override
     protected void added(@NotNull final String path, @NotNull final Set<String> added, @NotNull final Set<String> deleted, @NotNull final Set<String> changed, @NotNull final Map<String, String> properties, @NotNull final CommitInfo commitInfo) {
-        final Set<String> names = concat(added, changed);
-        dig(path, names, pattern, propertyType, configuration.property_length_max(), commitInfo.getUserId());
+        dig(path, concat(added, changed), pattern, propertyType, configuration.property_length_max(), commitInfo.getUserId());
     }
 
     @Override
@@ -150,8 +149,7 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Override
     protected void changed(@NotNull final String path, @NotNull final Set<String> added, @NotNull final Set<String> deleted, @NotNull final Set<String> changed, @NotNull final Map<String, String> properties, @NotNull final CommitInfo commitInfo) {
-        final Set<String> names = concat(added, changed);
-        dig(path, names, pattern, propertyType, configuration.property_length_max(), commitInfo.getUserId());
+        dig(path, concat(added, changed), pattern, propertyType, configuration.property_length_max(), commitInfo.getUserId());
     }
 
     private void dig(final String path, final Set<String> names, final Pattern pattern, final int propertyType, final long maxLength, final String userId) {
