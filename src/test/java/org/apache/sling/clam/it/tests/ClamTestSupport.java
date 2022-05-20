@@ -108,8 +108,7 @@ public abstract class ClamTestSupport extends TestSupport {
             junitBundles(),
             awaitility(),
             restassured(),
-            testcontainers(),
-            jacoco() // remove with Testing PaxExam 4.0
+            testcontainers()
         );
     }
 
