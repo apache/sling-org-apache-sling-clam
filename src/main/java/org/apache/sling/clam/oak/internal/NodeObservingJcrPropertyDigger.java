@@ -157,24 +157,6 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
         threadPool.submit(digTask);
     }
 
-    private Set<String> filter(final String path, final Set<String> names, final Pattern pattern) {
-        final Set<String> paths = new HashSet<>();
-        for (final String name : names) {
-            final String p = String.format("%s/%s", path, name);
-            if (pattern.matcher(p).matches()) {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("path '{}' matches pattern '{}'", p, pattern.pattern());
-                }
-                paths.add(p);
-            } else {
-                if (logger.isDebugEnabled()) {
-                    logger.debug("path '{}' doesn't match pattern '{}'", p, pattern.pattern());
-                }
-            }
-        }
-        return paths;
-    }
-
     private Set<String> concat(final Set<String> a, final Set<String> b) {
         final Set<String> set = new HashSet<>(a);
         set.addAll(b);
@@ -202,6 +184,24 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
             this.propertyType = propertyType;
             this.maxLength = maxLength;
             this.userId = userId;
+        }
+
+        private Set<String> filter(final String path, final Set<String> names, final Pattern pattern) {
+            final Set<String> paths = new HashSet<>();
+            for (final String name : names) {
+                final String p = String.format("%s/%s", path, name);
+                if (pattern.matcher(p).matches()) {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("path '{}' matches pattern '{}'", p, pattern.pattern());
+                    }
+                    paths.add(p);
+                } else {
+                    if (logger.isDebugEnabled()) {
+                        logger.debug("path '{}' doesn't match pattern '{}'", p, pattern.pattern());
+                    }
+                }
+            }
+            return paths;
         }
 
         @Override
