@@ -71,7 +71,7 @@ import static org.apache.sling.clam.http.internal.ResponseUtil.json;
 @Designate(
     ocd = ClamEventsServletConfiguration.class
 )
-@SuppressWarnings("java:S1948")
+@SuppressWarnings({"java:S1948", "java:S1989"})
 public final class ClamEventsServlet extends HttpServlet implements JcrPropertyScanResultHandler {
 
     private static final String JCR_RESULT_EVENT_TYPE = "sling/clam/jcr/result";
