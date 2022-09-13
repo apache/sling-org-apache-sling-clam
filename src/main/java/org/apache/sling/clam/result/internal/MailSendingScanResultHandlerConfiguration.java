@@ -77,8 +77,8 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
         + "[# th:if=\"${index}\"]index: [(${index})][/]\n"
         + "size: [(${size})]\n"
         + "[# th:if=\"${userId}\"]userId: [(${userId})][/]\n"
-        + "started: [(${#dates.formatISO(new java.util.Date(started))})]\n"
-        + "timestamp: [(${#dates.formatISO(new java.util.Date(timestamp))})]\n";
+        + "started: [(${started})]\n"
+        + "timestamp: [(${timestamp})]\n";
 
     @AttributeDefinition(
         name = "Mail HTML",
