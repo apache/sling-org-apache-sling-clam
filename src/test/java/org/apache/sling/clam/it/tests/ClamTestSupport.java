@@ -19,7 +19,6 @@
 package org.apache.sling.clam.it.tests;
 
 import java.util.Collections;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -33,26 +32,18 @@ import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
 import org.apache.sling.commons.clam.ClamService;
 import org.apache.sling.event.jobs.JobManager;
 import org.apache.sling.jcr.api.SlingRepository;
-import org.apache.sling.testing.paxexam.SlingOptions;
 import org.apache.sling.testing.paxexam.TestSupport;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.options.ModifiableCompositeOption;
-import org.ops4j.pax.exam.options.OptionalCompositeOption;
-import org.ops4j.pax.exam.options.extra.VMOption;
 import org.osgi.framework.BundleContext;
 
 import static org.apache.sling.testing.paxexam.SlingOptions.awaitility;
 import static org.apache.sling.testing.paxexam.SlingOptions.restassured;
+import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsClam;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingEvent;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingQuickstartOakTar;
 import static org.apache.sling.testing.paxexam.SlingOptions.testcontainers;
-import static org.apache.sling.testing.paxexam.SlingVersionResolver.SLING_GROUP_ID;
 import static org.ops4j.pax.exam.CoreOptions.composite;
-import static org.ops4j.pax.exam.CoreOptions.junitBundles;
-import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.CoreOptions.vmOption;
-import static org.ops4j.pax.exam.CoreOptions.when;
-import static org.ops4j.pax.exam.CoreOptions.wrappedBundle;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
 
@@ -79,44 +70,30 @@ public abstract class ClamTestSupport extends TestSupport {
     static final String USER_PASSWORD = "foo";
 
     protected ModifiableCompositeOption baseConfiguration() {
-        SlingOptions.versionResolver.setVersionFromProject(SLING_GROUP_ID, "org.apache.sling.commons.threads");
         return composite(
-            // Truth first to prevent version issues with Guava
-            wrappedBundle(mavenBundle().groupId("com.google.truth").artifactId("truth").versionAsInProject()),
-            mavenBundle().groupId("com.google.guava").artifactId("guava").versionAsInProject(),
-            mavenBundle().groupId("com.google.guava").artifactId("failureaccess").versionAsInProject(),
-            mavenBundle().groupId("com.googlecode.java-diff-utils").artifactId("diffutils").versionAsInProject(),
             super.baseConfiguration(),
             quickstart(),
             // Sling Clam
             testBundle("bundle.filename"),
             factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
-                .put("scripts", new String[]{"create service user sling-clam\ncreate path (sling:Folder) /var/clam/results\nset ACL for sling-clam\nallow jcr:all on /var/clam\nend"})
+                .put("scripts", new String[]{"create service user sling-clam with path system/sling\ncreate path (sling:Folder) /var/clam/results(sling:OrderedFolder)\nset principal ACL for sling-clam\nallow jcr:read on /\nallow rep:write on /var/clam\nend"})
                 .asOption(),
             factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
                 .put("scripts", new String[]{"create user bob with password foo\ncreate group sling-clam-scan\nadd bob to group sling-clam-scan"})
                 .asOption(),
             factoryConfiguration("org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended")
-                .put("user.mapping", new String[]{"org.apache.sling.clam=sling-clam", "org.apache.sling.clam:result-writer=sling-clam"})
+                .put("user.mapping", new String[]{"org.apache.sling.clam=[sling-clam]", "org.apache.sling.clam:result-writer=[sling-clam]"})
                 .asOption(),
             // Sling Commons Clam
-            mavenBundle().groupId(SLING_GROUP_ID).artifactId("org.apache.sling.commons.clam").versionAsInProject(),
+            slingCommonsClam(),
             // testing
             newConfiguration("org.apache.sling.jcr.base.internal.LoginAdminWhitelist")
                 .put("whitelist.bundles.regexp", "PAXEXAM-PROBE-.*")
                 .asOption(),
-            junitBundles(),
             awaitility(),
             restassured(),
             testcontainers()
         );
-    }
-
-    // remove with Testing PaxExam 4.0
-    protected OptionalCompositeOption jacoco() {
-        final String jacocoCommand = System.getProperty("jacoco.command");
-        final VMOption option = Objects.nonNull(jacocoCommand) && !jacocoCommand.trim().isEmpty() ? vmOption(jacocoCommand) : null;
-        return when(Objects.nonNull(option)).useOptions(option);
     }
 
     protected Option quickstart() {

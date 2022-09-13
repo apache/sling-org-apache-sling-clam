@@ -38,6 +38,7 @@ import org.ops4j.pax.exam.util.Filter;
 import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.apache.sling.testing.paxexam.SlingOptions.slingJcrJackrabbitUsermanager;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresence;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
 import static org.awaitility.Awaitility.with;
@@ -49,7 +50,7 @@ import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfigurati
 public class ClamJcrScanServletIT extends ClamTestSupport {
 
     @Inject
-    @Filter(value = "(path=/content/starter)", timeout = 300000)
+    @Filter(value = "(path=/content/starter/img/sling-logo.svg)", timeout = 300000)
     private ResourcePresence resourcePresence;
 
     private static final String URL_TEMPLATE = "http://localhost:%s/system/clam-jcr-scan";
@@ -61,9 +62,10 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
             clamdConfiguration(),
             slingResourcePresence(),
             factoryConfiguration("org.apache.sling.resource.presence.internal.ResourcePresenter")
-                .put("path", "/content/starter")
+                .put("path", "/content/starter/img/sling-logo.svg")
                 .asOption(),
-            slingStarterContent()
+            slingStarterContent(),
+            slingJcrJackrabbitUsermanager()
         );
     }
 

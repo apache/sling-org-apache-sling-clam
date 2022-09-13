@@ -44,12 +44,16 @@ import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.util.Filter;
 import org.ops4j.pax.exam.util.PathUtils;
 
-import static com.google.common.truth.Truth.assertThat;
 import static org.apache.sling.testing.paxexam.SlingOptions.greenmail;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsMessagingMail;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresence;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
 import static org.apache.sling.testing.paxexam.SlingOptions.thymeleaf;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.startsWith;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
@@ -63,7 +67,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
-    @Filter(value = "(path=/content/starter)", timeout = 300000)
+    @Filter(value = "(path=/content/starter/img/sling-logo.svg)", timeout = 300000)
     private ResourcePresence resourcePresence;
 
     @Inject
@@ -80,7 +84,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
             clamdConfiguration(),
             slingResourcePresence(),
             factoryConfiguration("org.apache.sling.resource.presence.internal.ResourcePresenter")
-                .put("path", "/content/starter")
+                .put("path", "/content/starter/img/sling-logo.svg")
                 .asOption(),
             newConfiguration("org.apache.sling.clam.result.internal.MailSendingScanResultHandler")
                 .put("mail.from", "from@example.org")
@@ -144,7 +148,7 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
 
     @Test
     public void testJcrPropertyScanResultHandler() {
-        assertThat(jcrPropertyScanResultHandler).isNotNull();
+        assertThat(jcrPropertyScanResultHandler, notNullValue());
     }
 
     @Test
@@ -152,16 +156,16 @@ public class MailSendingScanResultHandlerIT extends ClamTestSupport {
         digBinaries(nodeDescendingJcrPropertyDigger, "/content/starter");
         greenMail.waitForIncomingEmail(60000, 8);
         final MimeMessage[] messages = greenMail.getReceivedMessages();
-        assertThat(messages.length).isEqualTo(8);
+        assertThat(messages.length, is(8));
         for (final MimeMessage message : messages) {
-            assertThat(message.getSubject()).startsWith("Clam scan result: OK for /content/starter/");
+            assertThat(message.getSubject(), startsWith("Clam scan result: OK for /content/starter/"));
             final MimeMessageParser parser = new MimeMessageParser(message).parse();
             final String text = parser.getPlainContent();
-            assertThat(text).contains("status: OK");
-            assertThat(text).contains("message: ");
-            assertThat(text).contains("path: /content/starter/");
-            assertThat(text).contains("started: ");
-            assertThat(text).contains("timestamp: ");
+            assertThat(text, containsString("status: OK"));
+            assertThat(text, containsString("message: "));
+            assertThat(text, containsString("path: /content/starter/"));
+            assertThat(text, containsString("started: "));
+            assertThat(text, containsString("timestamp: "));
         }
     }
 

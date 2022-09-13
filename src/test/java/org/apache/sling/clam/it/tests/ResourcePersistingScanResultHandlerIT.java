@@ -36,12 +36,13 @@ import org.ops4j.pax.exam.spi.reactors.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.PerClass;
 import org.ops4j.pax.exam.util.Filter;
 
-import static com.google.common.truth.Truth.assertThat;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresence;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
 import static org.awaitility.Awaitility.with;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.ops4j.pax.exam.CoreOptions.options;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.factoryConfiguration;
 import static org.ops4j.pax.exam.cm.ConfigurationAdminOptions.newConfiguration;
@@ -55,7 +56,7 @@ public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
     private JcrPropertyScanResultHandler jcrPropertyScanResultHandler;
 
     @Inject
-    @Filter(value = "(path=/content/starter)", timeout = 300000)
+    @Filter(value = "(path=/content/starter/img/sling-logo.svg)", timeout = 300000)
     private ResourcePresence resourcePresence;
 
     @Inject
@@ -68,7 +69,7 @@ public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
             clamdConfiguration(),
             slingResourcePresence(),
             factoryConfiguration("org.apache.sling.resource.presence.internal.ResourcePresenter")
-                .put("path", "/content/starter")
+                .put("path", "/content/starter/img/sling-logo.svg")
                 .asOption(),
             newConfiguration("org.apache.sling.clam.result.internal.ResourcePersistingScanResultHandler")
                 .put("result.status.ok.persist", true)
@@ -80,7 +81,7 @@ public class ResourcePersistingScanResultHandlerIT extends ClamTestSupport {
 
     @Test
     public void testJcrPropertyScanResultHandler() {
-        assertThat(jcrPropertyScanResultHandler).isNotNull();
+        assertThat(jcrPropertyScanResultHandler, notNullValue());
     }
 
     @Test
