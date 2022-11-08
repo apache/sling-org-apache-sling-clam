@@ -24,7 +24,7 @@ import org.testcontainers.containers.GenericContainer;
 
 public class ClamContainerFactory {
 
-    private static final String CLAM_CONTAINER_IMAGE_NAME = "mk0x/docker-clamav";
+    private static final String CLAM_CONTAINER_IMAGE_NAME = "clamav/clamav";
 
     public static GenericContainer container = new GenericContainer<>(CLAM_CONTAINER_IMAGE_NAME)
         .withExposedPorts(3310)
