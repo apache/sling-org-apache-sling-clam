@@ -139,7 +139,9 @@ public final class NodeObservingJcrPropertyDigger extends NodeObserver {
 
     @Override
     protected void added(@NotNull final String path, @NotNull final Set<String> added, @NotNull final Set<String> deleted, @NotNull final Set<String> changed, @NotNull final Map<String, String> properties, @NotNull final CommitInfo commitInfo) {
-        dig(path, concat(added, changed), pattern, propertyType, configuration.property_length_max(), commitInfo.getUserId());
+        if (!commitInfo.isExternal()) {
+            dig(path, concat(added, changed), pattern, propertyType, configuration.property_length_max(), commitInfo.getUserId());
+        }
     }
 
     @Override
