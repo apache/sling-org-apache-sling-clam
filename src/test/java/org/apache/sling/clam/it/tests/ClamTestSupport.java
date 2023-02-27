@@ -40,6 +40,7 @@ import org.osgi.framework.BundleContext;
 import static org.apache.sling.testing.paxexam.SlingOptions.awaitility;
 import static org.apache.sling.testing.paxexam.SlingOptions.restassured;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsClam;
+import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsPermissions;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingEvent;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingQuickstartOakTar;
 import static org.apache.sling.testing.paxexam.SlingOptions.testcontainers;
@@ -65,10 +66,6 @@ public abstract class ClamTestSupport extends TestSupport {
 
     static final String ADMIN_PASSWORD = "admin";
 
-    static final String USER_USERNAME = "bob";
-
-    static final String USER_PASSWORD = "foo";
-
     protected ModifiableCompositeOption baseConfiguration() {
         return composite(
             super.baseConfiguration(),
@@ -78,14 +75,13 @@ public abstract class ClamTestSupport extends TestSupport {
             factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
                 .put("scripts", new String[]{"create service user sling-clam with path system/sling\ncreate path (sling:Folder) /var/clam/results(sling:OrderedFolder)\nset principal ACL for sling-clam\nallow jcr:read on /\nallow rep:write on /var/clam\nend"})
                 .asOption(),
-            factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
-                .put("scripts", new String[]{"create user bob with password foo\ncreate group sling-clam-scan\nadd bob to group sling-clam-scan"})
-                .asOption(),
             factoryConfiguration("org.apache.sling.serviceusermapping.impl.ServiceUserMapperImpl.amended")
                 .put("user.mapping", new String[]{"org.apache.sling.clam=[sling-clam]", "org.apache.sling.clam:result-writer=[sling-clam]"})
                 .asOption(),
             // Sling Commons Clam
             slingCommonsClam(),
+            // Sling Commons Permissions
+            slingCommonsPermissions(),
             // testing
             newConfiguration("org.apache.sling.jcr.base.internal.LoginAdminWhitelist")
                 .put("whitelist.bundles.regexp", "PAXEXAM-PROBE-.*")

@@ -42,10 +42,10 @@ import org.osgi.service.metatype.annotations.Option;
     String[] sling_auth_requirements() default {"/system/clam-jcr-scan"};
 
     @AttributeDefinition(
-        name = "scan authorized groups",
-        description = "User groups authorized for scanning"
+        name = "scan permission",
+        description = "Permission required for scanning"
     )
-    String[] scan_authorized_groups() default {"sling-clam-scan"};
+    String scan_permission() default "sling/clam/scan";
 
     @AttributeDefinition(
         name = "default property types",
