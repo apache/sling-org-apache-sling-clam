@@ -107,7 +107,7 @@ public abstract class ClamTestSupport extends TestSupport {
         final Integer port;
         if (testcontainer) {
             ClamContainerFactory.startContainer();
-            host = ClamContainerFactory.container.getContainerIpAddress();
+            host = ClamContainerFactory.container.getHost();
             port = ClamContainerFactory.container.getFirstMappedPort();
         } else {
             host = System.getProperty("clamd.host", "localhost");
