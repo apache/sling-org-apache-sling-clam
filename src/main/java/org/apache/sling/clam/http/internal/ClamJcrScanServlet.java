@@ -19,6 +19,8 @@
 package org.apache.sling.clam.http.internal;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -32,7 +34,6 @@ import org.apache.sling.api.SlingHttpServletResponse;
 import org.apache.sling.api.resource.Resource;
 import org.apache.sling.api.servlets.SlingAllMethodsServlet;
 import org.apache.sling.clam.jcr.NodeDescendingJcrPropertyDigger;
-import org.apache.sling.commons.permissions.PermissionsService;
 import org.jetbrains.annotations.NotNull;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
@@ -46,6 +47,7 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.apache.sling.clam.http.internal.RequestUtil.isAuthorized;
 import static org.apache.sling.clam.http.internal.RequestUtil.maxDepth;
 import static org.apache.sling.clam.http.internal.RequestUtil.maxLength;
 import static org.apache.sling.clam.http.internal.RequestUtil.path;
@@ -75,12 +77,6 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
         policyOption = ReferencePolicyOption.GREEDY
     )
     private volatile NodeDescendingJcrPropertyDigger digger;
-
-    @Reference(
-        policy = ReferencePolicy.DYNAMIC,
-        policyOption = ReferencePolicyOption.GREEDY
-    )
-    private volatile PermissionsService permissionsService;
 
     private ClamJcrScanServletConfiguration configuration;
 
@@ -126,9 +122,10 @@ public final class ClamJcrScanServlet extends SlingAllMethodsServlet {
     @Override
     @SuppressWarnings({"checkstyle:IllegalCatch", "checkstyle:ReturnCount", "checkstyle:ExecutableStatementCount"})
     protected void doPost(@NotNull final SlingHttpServletRequest request, @NotNull final SlingHttpServletResponse response) throws ServletException, IOException {
+        final List<String> groups = Arrays.asList(configuration.scan_authorized_groups());
         boolean isAuthorized = false;
         try {
-            isAuthorized = permissionsService.hasPermission(request.getUserPrincipal(), configuration.scan_permission());
+            isAuthorized = isAuthorized(request, groups);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

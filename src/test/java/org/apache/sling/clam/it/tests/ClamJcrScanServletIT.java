@@ -38,7 +38,6 @@ import org.ops4j.pax.exam.util.Filter;
 import static io.restassured.RestAssured.given;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.apache.sling.testing.paxexam.SlingOptions.slingCommonsPermissionsSling;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingJcrJackrabbitUsermanager;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingResourcePresence;
 import static org.apache.sling.testing.paxexam.SlingOptions.slingStarterContent;
@@ -56,14 +55,6 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
 
     private static final String URL_TEMPLATE = "http://localhost:%s/system/clam-jcr-scan";
 
-    private static final String AUTHORIZED_USER_USERNAME = "alice";
-
-    private static final String AUTHORIZED_USER_PASSWORD = "foo";
-
-    private static final String UNAUTHORIZED_USER_USERNAME = "bob";
-
-    private static final String UNAUTHORIZED_USER_PASSWORD = "bar";
-
     @Configuration
     public Option[] configuration() {
         return options(
@@ -74,27 +65,7 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
                 .put("path", "/content/starter/img/sling-logo.svg")
                 .asOption(),
             slingStarterContent(),
-            slingJcrJackrabbitUsermanager(),
-            factoryConfiguration("org.apache.sling.jcr.repoinit.RepositoryInitializer")
-                .put("scripts", new String[]{
-                    "create group sling-clam-scan\n" +
-                    String.format("create user %s with password %s\n", UNAUTHORIZED_USER_USERNAME, UNAUTHORIZED_USER_PASSWORD) +
-                    String.format("create user %s with password %s\n", AUTHORIZED_USER_USERNAME, AUTHORIZED_USER_PASSWORD) +
-                    String.format("add %s to group sling-clam-scan\n", AUTHORIZED_USER_USERNAME) +
-                    "create path (sling:Folder) /libs/sling/permissions/sling/clam/scan\n" +
-                    "set ACL for sling-clam-scan\nallow jcr:read on /libs/sling/permissions/sling/clam/scan\nend\n"
-                })
-                .asOption(),
-            // Sling Commons Permissions Sling
-            slingCommonsPermissionsSling(),
-            factoryConfiguration("org.apache.sling.commons.permissions.sling.internal.SlingPermissionsService")
-                .put("path", "/libs/sling/permissions")
-                .asOption(),
-            factoryConfiguration("org.apache.sling.jcr.base.internal.LoginAdminWhitelist.fragment")
-                .put("whitelist.bundles", new String[]{
-                    "org.apache.sling.commons.permissions.sling"
-                })
-                .asOption()
+            slingJcrJackrabbitUsermanager()
         );
     }
 
@@ -113,7 +84,7 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
         final String url = String.format(URL_TEMPLATE, httpPort());
         given()
             .auth()
-            .basic(UNAUTHORIZED_USER_USERNAME, UNAUTHORIZED_USER_PASSWORD)
+            .basic(ADMIN_USERNAME, ADMIN_PASSWORD)
             .param("path", "/content/starter")
             .when()
             .post(url)
@@ -126,7 +97,7 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
         final String url = String.format(URL_TEMPLATE, httpPort());
         given()
             .auth()
-            .basic(AUTHORIZED_USER_USERNAME, AUTHORIZED_USER_PASSWORD)
+            .basic(USER_USERNAME, USER_PASSWORD)
             .param("path", "/content/starter")
             .when()
             .post(url)
@@ -142,7 +113,7 @@ public class ClamJcrScanServletIT extends ClamTestSupport {
         final String url = String.format(URL_TEMPLATE, httpPort());
         given()
             .auth()
-            .basic(AUTHORIZED_USER_USERNAME, AUTHORIZED_USER_PASSWORD)
+            .basic(USER_USERNAME, USER_PASSWORD)
             .param("path", "/content/starter")
             .when()
             .post(url)

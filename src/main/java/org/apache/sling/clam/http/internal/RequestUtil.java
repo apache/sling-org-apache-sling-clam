@@ -19,9 +19,13 @@
 package org.apache.sling.clam.http.internal;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.apache.jackrabbit.api.security.user.Authorizable;
+import org.apache.jackrabbit.api.security.user.Group;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.jetbrains.annotations.NotNull;
 
@@ -98,6 +102,22 @@ public final class RequestUtil {
                 throw new Exception("Invalid parameter value for maxDepth: " + value);
             }
         }
+    }
+
+    @SuppressWarnings({"java:S112", "checkstyle:ReturnCount"})
+    static boolean isAuthorized(@NotNull final SlingHttpServletRequest request, @NotNull final Collection<String> authorizedGroups) throws Exception {
+        final Authorizable authorizable = request.getResourceResolver().adaptTo(Authorizable.class);
+        if (authorizable == null) {
+            return false;
+        }
+        final Iterator<Group> groups = authorizable.memberOf();
+        while (groups.hasNext()) {
+            final String id = groups.next().getID();
+            if (authorizedGroups.contains(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
